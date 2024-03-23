@@ -1,9 +1,9 @@
 .loginPage {
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-size: cover;
 }
 
 .loginContainer {
@@ -16,4 +16,10 @@
   margin-top: 20px; // Add space above the button if needed
   display: flex;
   justify-content: center; // This will center the button horizontally
+}
+
+.subtitle {
+  color: var(--color-zinc-500);
+  text-transform: uppercase;
+  margin-bottom: 32px;
 }
