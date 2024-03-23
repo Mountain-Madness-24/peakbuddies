@@ -23,7 +23,7 @@ const userSchema = new Schema({
     phone: String,
     email: String
   }, // Adjust based on what info you have
-  availability: String,
+  availability: Boolean,
   education: String,
   hackathons: [{ type: String, ref: 'User' }] // Using custom IDs for participants
 });

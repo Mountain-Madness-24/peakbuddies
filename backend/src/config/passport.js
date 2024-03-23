@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const dotenv = require('dotenv');
+const User = require('../models/user');
 
 dotenv.config();
 
@@ -11,14 +12,30 @@ passport.use(new LinkedInStrategy({
     scope: ['openid', 'email', 'profile'],
     state: true,
   },
-  function(accessToken, refreshToken, profile, done) {
-    // In a production application, you would want to associate the LinkedIn account with a user record in your database.
-    // This example just passes the profile on to the next step
-    console.log('accessToken', accessToken);
-    console.log('refreshToken', refreshToken);
+  async function(accessToken, refreshToken, profile, done) {
     console.log('profile', profile);
-    
-    return done(null, profile);
+
+    try {
+        let user = await User.findOne({userID: profile.id});
+        
+        if (!user) {
+            const details = {
+                userID: profile.id,
+                firstName: profile.givenName,
+                lastName: profile.familyName,
+                email: profile.email,
+                picture: profile.picture,
+            };
+
+            user = await new User(details).save();
+        }
+
+        return done(null, user);
+    } catch (error) {
+        console.log('error', error);
+        return done(error);
+    }
+
   }
 ));
 
