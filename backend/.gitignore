@@ -1,0 +1,20 @@
+# Dependency directory
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# macOS folder attributes
+.DS_Store
+
+# Windows folder attributes
+Thumbs.db
