@@ -1,33 +1,55 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const User = require('../models/user');
+const User = require('../models/');
 
 
-
-
-router.get('/getusers', async (req, res) => {
+router.post('/createEvent', async (req, res) => {
   try {
-    const users = await User.find({});
-    res.status(200).json(users);
+    const {
+      eventJoinLink,
+      adminsOfTheEvent,
+      nameOfEvent,
+      description,
+      importantLinks,
+      meetingRooms,
+      startDate,
+      endDate,
+      intervalOfPing,
+      isStarted,
+      isFinished,
+      participants
+    } = req.body;
+
+    // Create a new Event document
+    const newEvent = new Event({
+      eventJoinLink,
+      adminsOfTheEvent,
+      nameOfEvent,
+      description,
+      importantLinks,
+      meetingRooms,
+      startDate,
+      endDate,
+      intervalOfPing,
+      isStarted: isStarted || false, // Default to false if not provided
+      isFinished: isFinished || false, // Default to false if not provided
+      participants
+    });
+
+    // Save the new Event to the database
+    await newEvent.save();
+
+    // Respond to the request indicating success
+    res.status(201).json({
+      message: "Hackathon event created successfully",
+      event: newEvent,
+      eventId: newEvent._id // Include the generated ID in the response
+    });
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ message: "Failed to fetch users", error: error });
+    console.error("Error creating hackathon event:", error);
+    res.status(500).json({ message: "Failed to create hackathon event", error: error });
   }
 });
 
-router.get('/organizers', async (req, res) => {
-    try {
-      const organizers = await User.find({ isOrganizer: true });
-      res.status(200).json(organizers);
-    } catch (error) {
-      console.error("Error fetching organizers:", error);
-      res.status(500).json({ message: "Failed to fetch organizers", error: error });
-    }
-});
-  
-
 module.exports = router;
-
-  
-
