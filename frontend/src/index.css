@@ -1,4 +1,29 @@
 :root {
+  --color-white: #ffffff;
+  --color-zinc-500: #71717a;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+  --color-blue-500: #3b82f6;
+  --color-cyan-500: #06b6d4;
+
+  --border-radius-button: 12px;
+  --border-radius-avatar: 96px;
+
+  --text-size-timer: 56px;
+  --text-size-title: 32px;
+  --text-size-title-small: 24px;
+  --text-size-body: 16px;
+  --text-size-body-small: 12px;
+
+  --height-input: 40px;
+  --height-button: 48px;
+
+  --width-app-max: 393px;
+  --padding-app: 32px;
+}
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +90,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
