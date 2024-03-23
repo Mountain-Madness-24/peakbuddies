@@ -1,0 +1,15 @@
+.linkedinButton {
+  background-color: #0e76a8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .logo {
+    margin-right: 10px;
+  }
+}
