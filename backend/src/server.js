@@ -1,13 +1,20 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const connectDB = require('./config/db');
+
 require('./config/passport'); // Import passport configuration
+require('dotenv').config();
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Connect to MongoDB
+connectDB();
 
 // Session configuration
 app.use(session({
