@@ -5,6 +5,7 @@ const User = require('../models/user');
 
 dotenv.config();
 
+// linkedin strategy
 passport.use(new LinkedInStrategy({
     clientID: process.env.LINKEDIN_CLIENT_ID,
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
