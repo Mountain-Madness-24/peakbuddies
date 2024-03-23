@@ -29,6 +29,7 @@ app.use(passport.session());
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/userRoute'));
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
