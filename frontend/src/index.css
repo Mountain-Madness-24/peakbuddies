@@ -23,6 +23,44 @@
   --padding-app: 32px;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  color: var(--color-white);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+h1 {
+  font-size: var(--text-size-title);
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

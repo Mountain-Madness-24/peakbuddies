@@ -1,0 +1,11 @@
+.pageLayout {
+  background-color: var(--color-zinc-950);
+  min-width: 100vw;
+  min-height: 100vh;
+
+  main {
+    margin: auto;
+    max-width: var(--width-app-max);
+    padding: var(--padding-app);
+  }
+}
