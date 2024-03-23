@@ -24,7 +24,9 @@ const userSchema = new Schema({
     email: String
   }, // Adjust based on what info you have
   availability: String,
-  education: String
+  education: String,
+  userID: { type: String, unique: true }, // Custom ID for the event
+
 });
 
 module.exports = mongoose.model('User', userSchema);
