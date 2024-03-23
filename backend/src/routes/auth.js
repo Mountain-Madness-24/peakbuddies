@@ -7,6 +7,10 @@ const User = require('../models/user');
 router.get('/linkedin',
   passport.authenticate('linkedin'));
 
+router.get('/', function(req, res) {
+  res.redirect('/auth/linkedin');
+});
+
 // Handle callback from LinkedIn
 router.get('/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: '/login' }),

@@ -18,7 +18,7 @@ connectDB();
 
 // Session configuration
 app.use(session({
-  secret: 'secret', // Replace with a real secret in production
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
 }));
