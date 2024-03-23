@@ -14,4 +14,12 @@ router.get('/linkedin/callback',
     res.redirect('/');
   });
 
+router.get('/login',
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.status(200).json({ message: "success", isSuccess: false});
+  });
+
+  
+
 module.exports = router;
