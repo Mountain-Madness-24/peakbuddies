@@ -4,6 +4,39 @@ const passport = require('passport');
 const User = require('../models/user');
 
 
+// Assuming this middleware function checks if a user is authenticated.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(401).json({ message: "You are not authenticated" });
+  }
+}
+
+// Your existing protected route
+router.get('/protected', ensureAuthenticated, function(req, res) {
+  res.status(200).json({ message: "You are authenticated", user: req.user.userID });
+});
+
+// A new route to get an event, also protected
+router.get('/getEvent', ensureAuthenticated, function(req, res) {
+  const userId = req.user.userID; 
+  
+  console.log(userId)
+  res.status(200).json({ message: "You are authenticated", user: req.user.userID });
+
+  // Assuming userID is stored on the req.user object
+  // Logic to find the event based on the userId or other parameters goes here
+  // For example:
+  // Event.find({ userId: userId }).then(event => {
+  //   res.json(event);
+  // }).catch(error => {
+  //   res.status(500).json({ message: "Error fetching event", error: error });
+  // });
+});
+
+
+
 router.post('/createEvent', async (req, res) => {
   try {
     const {
