@@ -117,9 +117,10 @@ export const NewMeetingPage = () => {
     EmitEvent("pingOtherPerson", otherPersonId);
   };
 
+  console.log(meetingDetails[0].startingTime)
 
-  const { time, minutes } = meetingDetails.startingTime
-    ? getFormattedTime(meetingDetails.startingTime)
+  const { time, minutes } = meetingDetails[0].startingTime
+    ? getFormattedTime(meetingDetails[0].startingTime)
     : { time: "", minutes: "" };
 
   return (
@@ -164,7 +165,7 @@ export const NewMeetingPage = () => {
           <IconLocation />
           <p className={globalStyles.subtitle}>Location</p>
           <p className={globalStyles.titleSmall}>
-            {meetingDetails.locationName}
+            {meetingDetails[0].locationName}
           </p>
         </section>
         <section>
