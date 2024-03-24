@@ -14,7 +14,7 @@ PeakBuddies App is designed to revolutionize the networking experience for stude
 - Generation oflinks for participants to opt-in.
 
 ### Networking Mechanism
-- A "speed dating" format where participants exchange LinkedIn profiles, receive conversation prompts from ChatGPT, and have timed interactions.
+- A "speed dating" format where participants exchange LinkedIn profiles, receive conversation prompts, and have timed interactions.
 - An option to explore other participants' profiles and request connections, facilitating the expansion of one's professional network.
 
 ### Pages
