@@ -8,6 +8,7 @@ import {
 } from "../components/icons";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./meeting-page.module.scss";
@@ -82,7 +83,9 @@ const Timer = ({
 };
 
 export const MeetingPage = () => {
+  const navigate = useNavigate();
   const [currentStage, setCurrentStage] = useState("intro");
+
   const [currentTimerDuration, setCurrentTimerDuration] = useState(
     STAGES[currentStage].duration
   );
@@ -107,7 +110,13 @@ export const MeetingPage = () => {
       className={styles.meetingEndedPage}
       buttons={
         <>
-          <Button>Back Home</Button>
+          <Button
+            onClick={() => {
+              navigate("/home");
+            }}
+          >
+            Back Home
+          </Button>
         </>
       }
     >
@@ -126,7 +135,9 @@ export const MeetingPage = () => {
       className={styles.meetingPage}
       buttons={
         <>
-          <Button variant="secondary">End Meeting</Button>
+          <Button variant="secondary" onClick={() => navigate("/home")}>
+            End Meeting
+          </Button>
         </>
       }
     >
