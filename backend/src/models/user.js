@@ -7,6 +7,8 @@ const userSchema = new Schema({
   lastName: String,
   email: String,
   linkedinLink: String,
+  userId: { type: String, required: true }, // Made userId required
+
   experience: [{
     title: String,
     company: String,
@@ -25,7 +27,7 @@ const userSchema = new Schema({
   }, // Adjust based on what info you have
   availability: {type: Boolean, default: false},
   education: String,
-  hackathons: [{ type: String, ref: 'User' }] // Using custom IDs for participants
+  events: [{ type: String, ref: 'event' }], // Using custom IDs for participants
 });
 
 module.exports = mongoose.model('User', userSchema);
