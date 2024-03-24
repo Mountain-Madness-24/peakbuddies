@@ -23,7 +23,7 @@ router.get('/getEvent', ensureAuthenticated, function(req, res) {
   const userId = req.user.userID; 
   
   console.log(userId)
-  res.status(200).json({ message: "You are authenticated", user: req.user.userID });
+  res.status(200).json({ message: "You are authenticated", user: req.user.userId });
 
   // Assuming userID is stored on the req.user object
   // Logic to find the event based on the userId or other parameters goes here
