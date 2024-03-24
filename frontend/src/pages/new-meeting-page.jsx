@@ -47,9 +47,12 @@ export const NewMeetingPage = () => {
 
   useEffect(() => {
     const fetchOtherUser = async () => {
+
+      console.log(meetingDetails[0])
+
       try {
         const response = await axios.get(
-          `http://localhost:3000/user/getuser/${meetingDetails.membersOfMeeting[1]}`,
+          `http://localhost:3000/user/getuser/${meetingDetails[0].membersOfMeeting[1]}`,
           {
             withCredentials: true,
           }
