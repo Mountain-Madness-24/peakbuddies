@@ -20,14 +20,13 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/home/:id" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/new-meeting/:id" element={<NewMeetingPage />} />
         <Route path="/meeting/:id" element={<MeetingPage />} />
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/create-event" element={<CreateEventPage />} />
-        <Route path="/onboarding" element={<OnboardingPage />} />
+        <Route path="/onboarding/:id" element={<OnboardingPage />} />
         <Route path="/join-event" element={<JoinEventPage />} />
-        {/* Redirect all unmatched routes to /login */}
         <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </Router>

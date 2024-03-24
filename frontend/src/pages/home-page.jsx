@@ -7,14 +7,17 @@ import {
   NavBar,
   SocketComponent,
 } from "../components/";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import globalStyles from "../globals.module.scss";
 import styles from "./home-page.module.scss";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
   const [events, setEvents] = useState([]); // Initialize events state
-  const { id } = useParams(); // Extract the user ID from the URL parameters
+  const [createdEvents, setCreatedEvents] = useState([]); // Initialize events state
+
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
 
   const handleCreateEventButton = () => {
     navigate(`/create-event`);
@@ -36,6 +39,27 @@ export const HomePage = () => {
           }
         );
         setEvents(response.data); // Set fetched events to state
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  useEffect(() => {
+    // Function to fetch events
+    const fetchEvents = async () => {
+      try {
+        // Adjust the request URL as needed to match your backend endpoint
+        const response = await axios.get(
+          "http://localhost:3000/event/getCreatedEvents",
+          {
+            withCredentials: true, // Necessary for sessions to work across domains
+          }
+        );
+        setCreatedEvents(response.data); // Set fetched events to state
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -72,8 +96,22 @@ export const HomePage = () => {
             </Link>
           ))}
         </div>
+
+        <div className={`${styles.eventList} ${styles.createdEventList}`}>
+          <h2 className={globalStyles.subtitle}>Your Created Events</h2>
+
+          {createdEvents.map((event) => (
+            <Link
+              to={`/event/${event._id}`}
+              key={event._id}
+              className={styles.eventItem}
+            >
+              {event.nameOfEvent}
+            </Link>
+          ))}
+        </div>
       </div>
-      <SocketComponent userId={id} />
+      <SocketComponent userId={userId} />
     </PageLayout>
   );
 };

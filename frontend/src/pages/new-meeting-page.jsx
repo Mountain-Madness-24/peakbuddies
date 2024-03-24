@@ -1,11 +1,14 @@
-import { PageLayout, Avatar, Button, EmitEvent } from "../components/";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { PageLayout, Avatar, Button } from "../components/";
 import {
   IconWork,
   IconSchool,
   IconTime,
   IconLocation,
 } from "../components/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { format, addMinutes } from "date-fns";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./new-meeting-page.module.scss";
@@ -13,45 +16,95 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 export const NewMeetingPage = () => {
+  const [meetingDetails, setMeetingDetails] = useState(null);
+  const [otherUser, setOtherUser] = useState({
+    firstName: "",
+    lastName: "",
+    school: "",
+    recentExperience: "",
+  });
+
   const navigate = useNavigate();
   const { id } = useParams();
 
+  useEffect(() => {
+    const fetchMeetingDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/meetings/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setMeetingDetails(response.data);
+        console.log("DEETS:", response.data);
+      } catch (error) {
+        console.error("Error fetching meeting details:", error);
+      }
+    };
+
+    fetchMeetingDetails();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchOtherUser = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/user/getuser/${meetingDetails.membersOfMeeting[1]}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setOtherUser(response.data);
+        console.log("OTHER USER:", response.data);
+      } catch (error) {
+        console.error("Error fetching other user details:", error);
+      }
+    };
+
+    if (meetingDetails) {
+      fetchOtherUser();
+    }
+  }, [meetingDetails]);
+
   const goHome = () => {
-    navigate('/');
+    navigate("/home");
+  };
+
+  if (!meetingDetails) {
+    return <div>Loading meeting details...</div>;
   }
 
-  const getOtherPersonUserId = async () => {
-    // GET /meetings/:meetingId - Returns meeting details
-    try {
-    const meetingDetails = await axios.get(`http://localhost:3000/meetings/${id}`, {
-      withCredentials: true,
-    });
+  const getFormattedTime = (dateString) => {
+    const date = new Date(dateString);
+    const datePlus15Min = addMinutes(date, 15); // Add 15 minutes
+    const time = format(datePlus15Min, "h:mm aaaa"); // Format: 12:45 PM
+    const minutes = format(datePlus15Min, "m"); // Extract minutes
 
-    const membersInMeeting = meetingDetails.data[0].membersOfMeeting;
-    console.log("Members in meeting", membersInMeeting);
+    return {
+      time, // "12:45 PM"
+      minutes, // "15"
+    };
+  };
 
-    const other = membersInMeeting.filter((member) => member !== "KmrdadwAHJ")[0];
-    EmitEvent('pingOtherPerson', other);
-
-  } catch (error) {
-    console.error("Failed to get meeting details", error);
-  }
-
-  }
+  const { time, minutes } = meetingDetails.startingTime
+    ? getFormattedTime(meetingDetails.startingTime)
+    : { time: "", minutes: "" };
 
   return (
     <PageLayout
       buttons={
         <>
-          <Button>Start Meeting</Button>
-          <Button 
-            variant="secondary"
-            onClick={getOtherPersonUserId}
-          >Ping Bobby</Button>
-          <Button 
-            variant="tetriary"
-            onClick={goHome}
-          >Decline Meeting</Button>
+          <Button onClick={() => navigate(`/meeting/${id}`)}>
+            Start Meeting
+          </Button>
+          <Button variant="secondary">
+            {otherUser ? `Ping ${otherUser.firstName}` : "Ping User"}
+          </Button>
+
+          <Button variant="tetriary" onClick={goHome}>
+            Decline Meeting
+          </Button>
         </>
       }
     >
@@ -59,16 +112,18 @@ export const NewMeetingPage = () => {
         <Avatar />
         <section className={styles.title}>
           <p className={globalStyles.subtitle}>New Meeting</p>
-          <h1>Bobby Chan</h1>
+          <h1>
+            {otherUser.firstName}&nbsp;&nbsp;{otherUser.lastName}
+          </h1>
         </section>
         <section className={styles.info}>
           <div>
             <IconSchool />
-            <p>Simon Fraser University</p>
+            <p>{otherUser.school}</p>
           </div>
           <div>
             <IconWork />
-            <p>Software Developer @ Microsoft</p>
+            <p>{otherUser.recentExperience}</p>
           </div>
         </section>
       </article>
@@ -76,12 +131,16 @@ export const NewMeetingPage = () => {
         <section>
           <IconLocation />
           <p className={globalStyles.subtitle}>Location</p>
-          <p className={globalStyles.titleSmall}>Tasc 9204</p>
+          <p className={globalStyles.titleSmall}>
+            {meetingDetails.locationName}
+          </p>
         </section>
         <section>
           <IconTime />
           <p className={globalStyles.subtitle}>Time</p>
-          <p className={globalStyles.titleSmall}>12:45 pm</p>
+          <p className={globalStyles.titleSmall}>
+            {time} <br /> IN {minutes} MINS
+          </p>
         </section>
       </article>
     </PageLayout>
