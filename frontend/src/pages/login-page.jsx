@@ -9,46 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const LoginPage = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Function defined inside useEffect to avoid defining it on each render
-    const checkAuthenticationOnLoad = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/auth/protected",
-          {
-            withCredentials: true,
-          }
-        );
-        const data = response.data;
-        if (response.status === 200 && data.user) {
-          navigate(`/onboarding/${data.user}`);
-        }
-        // If not authenticated, nothing happens and the login page stays
-      } catch (error) {
-        console.error("Error checking authentication status:", error);
-      }
-    };
-
-    // Call the function to check authentication status
-    checkAuthenticationOnLoad();
-  }, [navigate]);
-
-  const handleLogin = () => {
-    const loginWindow = window.open(
-      "http://localhost:3000/auth/linkedin",
-      "Login with LinkedIn",
-      "width=800,height=600"
-    );
-
-    const pollLogin = setInterval(() => {
-      if (loginWindow.closed) {
-        clearInterval(pollLogin);
-        // Re-check authentication status after the popup closes
-        checkAuthentication();
-      }
-    }, 100);
-  };
-
+  // Define checkAuthentication as a standalone function that both useEffect and handleLogin can call
   const checkAuthentication = async () => {
     try {
       const response = await axios.get("http://localhost:3000/auth/protected", {
@@ -56,6 +17,7 @@ export const LoginPage = () => {
       });
       const data = response.data;
       if (response.status === 200 && data.user) {
+        window.localStorage.setItem("userId", data.user); // Store the userId in localStorage
         navigate(`/onboarding/${data.user}`);
       } else {
         console.log("User is not authenticated");
@@ -65,15 +27,35 @@ export const LoginPage = () => {
     }
   };
 
+  useEffect(() => {
+    // Use the checkAuthentication function here
+    checkAuthentication();
+  }, [navigate]);
+
+  const handleLogin = () => {
+    const loginWindow = window.open(
+      "http://localhost:3000/auth/linkedin",
+      "Login with LinkedIn",
+      "width=800,height=600"
+    );
+
+    // Polling to check if the popup window is closed
+    const pollLogin = setInterval(() => {
+      if (loginWindow.closed) {
+        clearInterval(pollLogin);
+        // Re-check authentication status after the popup closes using the same checkAuthentication function
+        checkAuthentication();
+      }
+    }, 100);
+  };
+
   return (
     <PageLayout header={<HeaderImage height={336} />}>
       <div className={styles.loginPage}>
         <IconLogo />
         <h1>Peak Buddies</h1>
         <p className={globalStyles.subtitle}>
-          Connect with your hackathon
-          <br />
-          community in real time
+          Connect with your hackathon community in real time
         </p>
         <Button onClick={handleLogin}>
           <IconLinkedIn />

@@ -27,12 +27,10 @@ router.patch("/updateUser", async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating user's school and recent experience:", error);
-    res
-      .status(500)
-      .json({
-        message: "Failed to update user's school and recent experience",
-        error: error,
-      });
+    res.status(500).json({
+      message: "Failed to update user's school and recent experience",
+      error: error,
+    });
   }
 });
 
