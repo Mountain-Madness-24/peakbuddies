@@ -14,9 +14,10 @@ export const SocketComponent = ({ userId }) => {
         });
 
         // Listen to the 'connect' event to log the connection status
+
         socket.on('connect', () => {
-            console.log("Socket connected:", socket.connected); // Now it should log true
-        });
+            socket.emit('userLogin', userId);
+        })
 
         // Listen for 'meetingNotification' event from the server
         socket.on('meetingNotification', (notification) => {
@@ -32,7 +33,7 @@ export const SocketComponent = ({ userId }) => {
 
         // Cleanup on component unmount
         return () => {
-            socket.off('connect');
+            socket.off('userLogin');
             socket.off('meetingNotification');
             socket.disconnect();
         };

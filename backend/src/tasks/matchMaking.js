@@ -78,6 +78,7 @@ async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
         meetingId: meeting._id,
         meetingDetails: meeting,
       });
+      console.log(member.socketId);
     }); // TODO: FRONTEND: Listen for 'meetingNotification' event
 
     /*

@@ -61,6 +61,8 @@ io.on('connection', (socket) => {
   socket.on('userLogin', (userId) => {
     console.log('User logged in', userId);
     map_socket_to_user[userId] = socket.id;
+
+    console.log("Added:", map_socket_to_user[userId]);
   }); // TODO: FRONTEND: Emit this event when a user logs in
 
   // Listen for disconnect

@@ -46,6 +46,8 @@ router.delete('/:meetingId', async (req, res) => {
 router.post('/:meetingId/notify-participant', async (req, res) => {
     // Implementation would depend on your notification logic.
     // This is a placeholder to indicate success.
+    console.log("Notifying participant");
+
     res.json({ isSuccess: true });
 });
 
