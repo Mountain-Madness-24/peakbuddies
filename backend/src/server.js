@@ -40,18 +40,33 @@ app.use('/event', require('./routes/event'));
 app.use('/user', require('./routes/userRoute'));
 app.use('/meetings', require('./routes/meetings'));
 
+map_socket_to_user = {};
 io.on('connection', (socket) => {
   console.log('A user connected', socket.id);
+
+  // Listen for user login
+  socket.on('userLogin', (userId) => {
+    console.log('User logged in', userId);
+    map_socket_to_user[userId] = socket.id;
+  }); // TODO: FRONTEND: Emit this event when a user logs in
 
   // Listen for disconnect
   socket.on('disconnect', () => {
     console.log('User disconnected', socket.id);
+
+    // delete the user from the map
+    for (let [key, value] of Object.entries(map_socket_to_user)) {
+      if (value === socket.id) {
+        delete map_socket_to_user[key];
+        break;
+      }
+    }
   });
 
   // Here you can listen for other events and emit messages to clients
 });
 
-matchMaking(io);
+matchMaking(io, map_socket_to_user);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

@@ -3,11 +3,19 @@ const Event = require('../models/event');
 const Meeting = require('../models/meeting');
 const User = require('../models/user');
 
-async function matchParticipantsAndNotify(event, io) {
+async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
   // Assume participants are stored by their ObjectId or a unique identifier in the event.participants
   const participants = await User.find({ 'userId': { $in: event.participants } });
 
   console.log(participants)
+
+  // list of all sockets
+  const sockets = io.sockets.sockets;
+
+  // for all participants, find their socket add it to their info
+  participants.forEach(participant => {
+    participant.socketId = map_socket_to_user[participant.userId];
+  });
 
 
   // Simple random matching logic for demonstration. This should be replaced with your actual matching logic.
@@ -35,25 +43,26 @@ async function matchParticipantsAndNotify(event, io) {
         meetingId: meeting._id,
         meetingDetails: meeting,
       });
-    });
+    }); // TODO: FRONTEND: Listen for 'meetingNotification' event
   }
 }
 
 // Run every minute to check for events starting
-module.exports = function(io) {
+module.exports = function(io, map_socket_to_user) {
   cron.schedule('* * * * *', async () => { // TODO: Revert back to '* * * * *' for production
     // get current time, in UTC
     let now = new Date();
     now = now.toUTCString();
     const upcomingEvents = await Event.find({ startDate: { $lte: now }});
 
+    console.log(`Found ${upcomingEvents.length} events starting now!`);
     upcomingEvents.forEach( async (event) => {
       console.log(`Event ${event._id} is starting now!`);
       console.log(`Event details: ${event}`);
 
       setTimeout(async () => {
         console.log(`Matching participants for event ${event._id}...`)
-        await matchParticipantsAndNotify(event, io); // Implement matching and notification
+        await matchParticipantsAndNotify(event, io, map_socket_to_user); // Implement matching and notification
       }, 1000); // Convert interval to milliseconds
       //event.intervalOfPing * 60000
 
