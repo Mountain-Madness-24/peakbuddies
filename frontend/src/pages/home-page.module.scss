@@ -40,6 +40,13 @@
       }
     }
   }
+
+  .createdEventList {
+    h2 {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  }
 }
 
 .navBar {
@@ -47,5 +54,5 @@
   top: 0;
   z-index: 1000;
   background: none;
-  right:0;
+  right: 0;
 }
