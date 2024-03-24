@@ -25,6 +25,16 @@ router.get('/organizers', async (req, res) => {
     }
 });
   
+router.get('/getAvailableUsers', async (req, res) => {
+  try {
+    const availableUsers = await User.find({ isAvailable: true });
+    res.status(200).json(availableUsers);
+  } catch (error) {
+    console.error("Error fetching organizers:", error);
+    res.status(500).json({ message: "Failed to fetch organizers", error: error });
+  }
+});
+
 
 module.exports = router;
 

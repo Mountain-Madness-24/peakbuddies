@@ -1,12 +1,13 @@
-import { PageLayout, Button } from "../components";
+import { PageLayout, Button, Avatar } from "../components";
 import {
   IconIntro,
   IconIcebreaker,
   IconLinkedIn,
   IconShuffle,
+  IconCelebration,
 } from "../components/icons";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./meeting-page.module.scss";
@@ -40,6 +41,7 @@ const Timer = ({
   currentStage,
   setCurrentStage,
   setCurrentTimerDuration,
+  setHasMeetingEnded,
 }) => {
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -64,7 +66,12 @@ const Timer = ({
       onComplete={() => {
         setCurrentStage(currentStage === "intro" ? "icebreaker" : "linkedIn");
         setCurrentTimerDuration(STAGES[currentStage].duration);
-        return { shouldRepeat: true };
+
+        if (currentStage === "linkedIn") {
+          setHasMeetingEnded(true);
+        }
+
+        return { shouldRepeat: currentStage !== "linkedIn" };
       }}
     >
       {({ remainingTime }) => (
@@ -81,10 +88,11 @@ export const MeetingPage = () => {
   );
   const [icebreakerQuestions, setIcebreakerQuestions] = useState([
     "What's your favorite movie?",
-    "What's your favorite food?",
-    "What's your favorite color?",
+    "Which country would you like to visit next?",
+    "How do you like to spend your weekends?",
   ]);
   const [currentIcebreakerQuestion, setCurrentIcebreakerQuestion] = useState(0);
+  const [hasMeetingEnded, setHasMeetingEnded] = useState(false);
 
   const onClickChangeIcebreakerQuestion = () => {
     if (currentIcebreakerQuestion === icebreakerQuestions.length - 1) {
@@ -94,7 +102,26 @@ export const MeetingPage = () => {
     }
   };
 
-  return (
+  return hasMeetingEnded ? (
+    <PageLayout
+      className={styles.meetingEndedPage}
+      buttons={
+        <>
+          <Button>Back Home</Button>
+        </>
+      }
+    >
+      <IconCelebration />
+      <div>
+        <p className={globalStyles.subtitle}>You just connected with</p>
+        <h1>Bobby Chan</h1>
+      </div>
+      <section>
+        <Avatar />
+        <Avatar />
+      </section>
+    </PageLayout>
+  ) : (
     <PageLayout
       className={styles.meetingPage}
       buttons={
@@ -131,15 +158,16 @@ export const MeetingPage = () => {
           currentStage={currentStage}
           setCurrentStage={setCurrentStage}
           setCurrentTimerDuration={setCurrentTimerDuration}
+          setHasMeetingEnded={setHasMeetingEnded}
         />
       </article>
       <article className={styles.prompt}>
         <p className={globalStyles.titleSmall}>
-          {currentStage !== "icebreakers"
+          {currentStage !== "icebreaker"
             ? STAGES[currentStage].label
             : icebreakerQuestions[currentIcebreakerQuestion]}
         </p>
-        {currentStage === "icebreakers" && (
+        {currentStage === "icebreaker" && (
           <button
             className={styles.shuffleButton}
             onClick={onClickChangeIcebreakerQuestion}
