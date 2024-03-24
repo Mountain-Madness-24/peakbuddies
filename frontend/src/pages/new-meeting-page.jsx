@@ -44,6 +44,20 @@ export const NewMeetingPage = () => {
     fetchMeetingDetails();
   }, [id]);
 
+  const startMeeting = async () => {
+    try {
+      // Make the user unavailable before starting the meeting
+      await axios.patch('http://localhost:3000/user/makeUnavailable', {}, {
+        withCredentials: true,
+      });
+      // After making the user unavailable, navigate to the meeting
+      navigate(`/meeting/${id}`);
+    } catch (error) {
+      console.error("Error making user unavailable:", error);
+      // You may want to handle this error differently, e.g., show a notification
+    }
+  };
+
   useEffect(() => {
     const fetchOtherUser = async () => {
       try {
@@ -93,7 +107,7 @@ export const NewMeetingPage = () => {
     <PageLayout
       buttons={
         <>
-          <Button onClick={() => navigate(`/meeting/${id}`)}>
+          <Button onClick={startMeeting}>
             Start Meeting
           </Button>
           <Button variant="secondary">

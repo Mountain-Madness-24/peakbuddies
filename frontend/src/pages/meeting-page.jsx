@@ -37,6 +37,8 @@ const MeetingStageIndicator = ({ icon, label, isActive = false }) => {
   );
 };
 
+
+
 const Timer = ({
   durationMinutes,
   currentStage,
@@ -105,15 +107,31 @@ export const MeetingPage = () => {
     }
   };
 
+  const endMeeting = async () => {
+    try {
+      // Make the user available again when ending the meeting
+      await axios.patch('http://localhost:3000/user/makeAvailable', {}, {
+        withCredentials: true,
+      });
+      // After updating the availability, navigate to the home page
+      navigate("/home");
+    } catch (error) {
+      console.error("Error making user available:", error);
+      // Handle the error, for example by showing an error message to the user
+    }
+  };
+
+
+
+  
+
   return hasMeetingEnded ? (
     <PageLayout
       className={styles.meetingEndedPage}
       buttons={
         <>
           <Button
-            onClick={() => {
-              navigate("/home");
-            }}
+            onClick={endMeeting}
           >
             Back Home
           </Button>
@@ -135,7 +153,7 @@ export const MeetingPage = () => {
       className={styles.meetingPage}
       buttons={
         <>
-          <Button variant="secondary" onClick={() => navigate("/home")}>
+          <Button variant="secondary" onClick={endMeeting}>
             End Meeting
           </Button>
         </>
