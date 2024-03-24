@@ -20,23 +20,53 @@ router.get('/protected', ensureAuthenticated, function(req, res) {
   res.status(200).json({ message: "You are authenticated", user: req.user.userID });
 });
 
+
+router.post('/getEvent', async (req, res) => {
+  try {
+    const { eventId } = req.body;
+    
+    if (!eventId) {
+      return res.status(400).json({ message: "Event ID is required" });
+    }
+
+    const event = await Event.findById(eventId);
+
+    if (event) {
+      res.status(200).json(event);
+    } else {
+      res.status(404).json({ message: "Event not found" });
+    }
+  } catch (error) {
+    console.error("Error retrieving event:", error);
+    res.status(500).json({ message: "Failed to retrieve event", error: error });
+  }
+});
+
+
 // A new route to get an event, also protected
-router.get('/getEvent', function(req, res) {
-
-  // Assuming userID is stored on the req.user object
-  // Logic to find the event based on the userId or other parameters goes here
-  // For example:
-  const eventIdToAdd = "someEventId"; // The string/ID you want to add to the user's events
-
-
-
-  User.find({ userId: 's3WcZu1X7X' }).then(user => {
+router.get('/getEvents', ensureAuthenticated, function(req, res) {
+  const userId = req.user.userId; 
+  User.find({ userId: userId }).then(user => {
     console.log(user);
-    res.json(user[0].events);
+
+    // no search the events corresponding the user event
+    const eventIds = user[0].events;
+    Event.find({ '_id': { $in: eventIds } })
+    .then(events => {
+      // Successfully found events, return them
+      res.json(events);
+    })
+    .catch(error => {
+      // Error fetching events
+      res.status(500).json({ message: "Error fetching events", error: error });
+    });
+    // make a search in Event grabbing all the ids that match the ids in user[0].events then return that as a response
+
   }).catch(error => {
     res.status(500).json({ message: "Error fetching event", error: error });
   });
 });
+
 
 
 
