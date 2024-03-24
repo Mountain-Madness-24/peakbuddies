@@ -1,7 +1,7 @@
 # peakbuddies
 
 ## Overview
-PeakBuddies App is designed to revolutionize the networking experience for students and participants at hackathons. Inspired by the spontaneous nature of the BeReal app, this app aims to create meaningful connections through a novel "speed networking" approach. At predetermined times, participants receive a ping to meet another person they are matched with, based on their interests and profiles. The app facilitates these meetings by providing profiles, logistics, and conversation prompts, ensuring participants can make the most out of these interactions.
+PeakBuddies App is designed to revolutionize the networking experience for students and participants at hackathons. Inspired by the spontaneous nature of the BeReal app, this app aims to create meaningful connections through a novel "speed networking" approach. At predetermined times, participants receive a ping to meet another person they are matched with. The app facilitates these meetings by providing profiles, logistics, and conversation prompts, ensuring participants can make the most out of these interactions. The App uses an special API for indoor places to assure students can find the random meeting spot adding a twist to the networking where student would be exploring different parts of the university based on the organizers planning. 
 
 ## Features
 
@@ -11,7 +11,7 @@ PeakBuddies App is designed to revolutionize the networking experience for stude
 
 ### Organizational Tools
 - Setup of predetermined meeting rooms by event organizers.
-- Generation of QR codes and links for participants to opt-in.
+- Generation oflinks for participants to opt-in.
 
 ### Networking Mechanism
 - A "speed dating" format where participants exchange LinkedIn profiles, receive conversation prompts from ChatGPT, and have timed interactions.
@@ -47,5 +47,5 @@ PeakBuddies App is designed to revolutionize the networking experience for stude
 3. Manage participant registrations and oversee the event's start and end.
 
 ## Getting Started
-To use the Hackathon Networking App, organizers must first set up the event in the system, including meeting rooms and schedules. Participants can then join using the provided QR code or link, complete their profiles, and prepare for a unique networking experience designed to build meaningful professional connections.
+To use the Hackathon Networking App, organizers must first set up the event in the system, including meeting rooms and schedules. Participants can then join using the provided link, complete their profiles, and prepare for a unique networking experience designed to build meaningful professional connections.
 
