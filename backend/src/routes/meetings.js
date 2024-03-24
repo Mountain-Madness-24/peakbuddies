@@ -23,9 +23,11 @@ router.get('/', async (req, res) => {
 // GET /meetings/:meetingId - Returns meeting details
 router.get('/:meetingId', async (req, res) => {
     try {
-        const meeting = await Meeting.findById(req.params.meetingId);
+        console.log("Getting meeting details", req.params.meetingId)
+        const meeting = await Meeting.find({ _id: req.params.meetingId });
         if (!meeting) return res.status(404).json({ message: 'Meeting not found' });
-        res.json(meeting);
+        console.log("Meeting details:", meeting)
+        res.status(200).json(meeting);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -40,15 +42,6 @@ router.delete('/:meetingId', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
-
-// POST /meetings/:meetingId/notify-participant - Notifies another user
-router.post('/:meetingId/notify-participant', async (req, res) => {
-    // Implementation would depend on your notification logic.
-    // This is a placeholder to indicate success.
-    console.log("Notifying participant");
-
-    res.json({ isSuccess: true });
 });
 
 // PATCH /meetings/:meetingId/start - Starts a meeting
