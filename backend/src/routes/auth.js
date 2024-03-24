@@ -74,7 +74,7 @@ router.post('/testsignup', async (req, res) => {
 router.get('/protected', function(req, res) {
   console.log('req.isAuthenticated()', req.isAuthenticated());
 
-
+  console.log(req)
   if (req.isAuthenticated()) {
     res.status(200).json({ message: "You are authenticated", user: req.user.userID });
   } else {
