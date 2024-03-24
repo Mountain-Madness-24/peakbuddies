@@ -38,8 +38,6 @@ const MeetingStageIndicator = ({ icon, label, isActive = false }) => {
   );
 };
 
-
-
 const Timer = ({
   durationMinutes,
   currentStage,
@@ -111,9 +109,13 @@ export const MeetingPage = () => {
   const endMeeting = async () => {
     try {
       // Make the user available again when ending the meeting
-      await axios.patch('http://localhost:3000/user/makeAvailable', {}, {
-        withCredentials: true,
-      });
+      await axios.patch(
+        "http://localhost:3000/user/makeAvailable",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       // After updating the availability, navigate to the home page
       navigate("/home");
     } catch (error) {
@@ -122,27 +124,19 @@ export const MeetingPage = () => {
     }
   };
 
-
-
-  
-
   return hasMeetingEnded ? (
     <PageLayout
       className={styles.meetingEndedPage}
       buttons={
         <>
-          <Button
-            onClick={endMeeting}
-          >
-            Back Home
-          </Button>
+          <Button onClick={endMeeting}>Back Home</Button>
         </>
       }
     >
       <IconCelebration />
       <div>
         <p className={globalStyles.subtitle}>You just connected with</p>
-        <h1>Bobby Chan</h1>
+        <h1>Zachary Chan</h1>
       </div>
       <section>
         <Avatar />
@@ -163,7 +157,7 @@ export const MeetingPage = () => {
       <p>05:23</p>
       <article className={styles.title}>
         <p className={globalStyles.subtitle}>Currently Meeting</p>
-        <h1>Bobby Chan</h1>
+        <h1>Zachary Chan</h1>
       </article>
       <article className={styles.meetingStageTimeline}>
         <MeetingStageIndicator
