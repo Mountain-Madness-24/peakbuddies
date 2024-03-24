@@ -1,0 +1,51 @@
+.homePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--padding-app);
+  position: relative;
+
+  h1 {
+    font-size: var(--text-size-title);
+    color: var(--color-white);
+    margin-bottom: var(--padding-app);
+    text-align: center;
+  }
+
+  .eventList {
+    width: 100%;
+    max-width: var(--width-app-max);
+    display: flex;
+    flex-direction: column;
+    gap: 10px; // Adjust the space between items as needed
+
+    .eventItem {
+      background-color: var(--color-zinc-800);
+      color: var(--color-white);
+      border-radius: var(--border-radius-button);
+      height: var(--height-button);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: var(--text-size-body);
+      border: none;
+      outline: none;
+      transition: background-color 0.3s;
+      text-decoration: none; // This will remove the underline from the links
+      background-color: var(--color-zinc-800);
+
+      &:hover {
+        background-color: var(--color-blue-500);
+      }
+    }
+  }
+}
+
+.navBar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background: none;
+  right:0;
+}

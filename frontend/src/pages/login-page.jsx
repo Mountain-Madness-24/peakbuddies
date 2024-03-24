@@ -5,7 +5,7 @@ import globalStyles from "../globals.module.scss";
 import styles from "./login-page.module.scss";
 
 export const LoginPage = () => (
-  <PageLayout header={<HeaderImage />}>
+  <PageLayout header={<HeaderImage height={336}/>}>
     <div className={styles.loginPage}>
       <IconLogo />
       <h1>Peak Buddies</h1>
