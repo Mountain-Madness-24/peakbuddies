@@ -9,3 +9,4 @@ export { IconHome } from "./icon-home";
 export { IconIntro } from "./icon-intro";
 export { IconIcebreaker } from "./icon-icebreaker";
 export { IconShuffle } from "./icon-shuffle";
+export { IconCelebration } from "./icon-celebration";
