@@ -1,6 +1,5 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { LoginPage, NewMeetingPage } from "./pages";
+import { LoginPage, NewMeetingPage, MeetingPage } from "./pages";
 
 const App = () => {
   return (
@@ -8,6 +7,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/new-meeting/:id" element={<NewMeetingPage />} />
+        <Route path="/meeting/:id" element={<MeetingPage />} />
       </Routes>
     </Router>
   );

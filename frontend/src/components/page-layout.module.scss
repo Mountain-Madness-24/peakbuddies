@@ -2,10 +2,13 @@
   background-color: var(--color-zinc-950);
   min-width: 100vw;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   main {
-    margin: auto;
     max-width: var(--width-app-max);
+    min-width: var(--width-app-max);
     padding: var(--padding-app);
   }
 
