@@ -13,6 +13,7 @@ import {
   CreateEventPage,
   OnboardingPage,
   JoinEventPage,
+  ProfilePage,
 } from "./pages";
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/onboarding/:id" element={<OnboardingPage />} />
         <Route path="/join-event" element={<JoinEventPage />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </Router>

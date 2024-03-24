@@ -48,7 +48,7 @@ export const EventPage = () => {
         </span>
         <section className={styles.participantGrid}>
           {participants.map((id, index) => (
-            <a key={id || index}>
+            <a key={id || index} href={`/profile/${id}`}>
               <Avatar id={id} />
             </a>
           ))}

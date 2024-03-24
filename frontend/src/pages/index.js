@@ -6,3 +6,4 @@ export { EventPage } from "./event-page";
 export { CreateEventPage } from "./create-event-page";
 export { OnboardingPage } from "./onboarding-page";
 export { JoinEventPage } from "./join-event-page";
+export { ProfilePage } from "./profile-page";
