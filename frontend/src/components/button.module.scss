@@ -11,6 +11,15 @@
   align-items: center;
   gap: 0.5rem;
   justify-content: center;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 
   &.secondary {
     color: var(--color-white);
