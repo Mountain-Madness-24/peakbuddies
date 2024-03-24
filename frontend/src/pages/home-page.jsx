@@ -7,17 +7,17 @@ import {
   NavBar,
   SocketComponent,
 } from "../components/";
-import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { Link } from "react-router-dom";
 import globalStyles from "../globals.module.scss";
 import styles from "./home-page.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
   const [events, setEvents] = useState([]); // Initialize events state
   const [createdEvents, setCreatedEvents] = useState([]); // Initialize events state
-  const { id } = useParams(); // Extract the user ID from the URL parameters
+
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
 
   const handleCreateEventButton = () => {
     navigate(`/create-event`);
@@ -111,7 +111,7 @@ export const HomePage = () => {
           ))}
         </div>
       </div>
-      <SocketComponent userId={id} />
+      <SocketComponent userId={userId} />
     </PageLayout>
   );
 };

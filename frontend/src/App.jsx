@@ -27,7 +27,6 @@ const App = () => {
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/onboarding/:id" element={<OnboardingPage />} />
         <Route path="/join-event" element={<JoinEventPage />} />
-        {/* Redirect all unmatched routes to /login */}
         <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </Router>

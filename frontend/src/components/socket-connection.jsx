@@ -4,12 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 const SOCKET_SERVER_URL = 'http://localhost:3000';
 
-export const SocketComponent = ({ userId }) => {
+let socket = null;
+
+export const EmitEvent = (eventName, data) => {
+    if (!socket) {
+        console.error('Socket is not connected');
+        return;
+    }
+    console.log('Emitting event:', eventName, data)
+    socket.emit(eventName, data);
+}
+
+export const SocketComponent = ({ userId, setPingOtherPerson }) => {
     const navigate = useNavigate();
-    
     useEffect(() => {
         // Connect to the socket server
-        const socket = io(SOCKET_SERVER_URL, {
+        socket = io(SOCKET_SERVER_URL, {
             withCredentials: true,
         });
 
@@ -32,13 +42,22 @@ export const SocketComponent = ({ userId }) => {
             }
         });
 
-        // Emit a userLogin event with userId on connecting
-        socket.emit('userLogin', userId);
+        socket.on('pingOtherPerson', (notification) => {
+            console.log("Received pingOtherPerson:", notification); // Log for debugging
+            
+            // create window alert
+            if (notification) {
+                alert(notification);
+            } else {
+                console.error("Notification data is missing the meetingId:", notification);
+            }
+        });
 
         // Cleanup on component unmount
         return () => {
             socket.off('userLogin');
             socket.off('meetingNotification');
+            socket.off('pingOtherPerson')
             socket.disconnect();
         };
     }, [userId, navigate]);
