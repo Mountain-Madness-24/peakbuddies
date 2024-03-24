@@ -15,12 +15,12 @@ const event = new Schema({
       long: Number
     }
   }],
-  startDate: { type: Date,  },
-  endDate: { type: Date},
-  intervalOfPing: Number, // Could be in minutes or seconds, depending on your requirement
-  isStarted: { type: Boolean},
-  isFinished: { type: Boolean },
-  participants: [{ type: String }] // Using custom IDs for participants
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+  intervalOfPing: Number, // In minutes 
+  isStarted: { type: Boolean, default: false },
+  isFinished: { type: Boolean, default: false },
+  participants: [{ type: String, ref: 'User' }] // Using custom IDs for participants
 });
 
 
