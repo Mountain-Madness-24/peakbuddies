@@ -1,5 +1,21 @@
 # peakbuddies
 
+## How to run the app
+
+### Frontend
+1. Change directory to `frontend/`
+2. `npm i`
+3. Create a `.env` file in the root of the frontend directory (ask us for values!)
+4. `npm run dev`
+5. Open `localhost:5173` in a browser
+
+### Backend
+1. Change directory to `backend/`
+2. `npm i`
+3. Create a `.env` file in the root of the backend directory (ask us for values!)
+4. `npm run start`
+
+
 ## Overview
 PeakBuddies App is designed to revolutionize the networking experience for students and participants at hackathons. Inspired by the spontaneous nature of the BeReal app, this app aims to create meaningful connections through a novel "speed networking" approach. At predetermined times, participants receive a ping to meet another person they are matched with. The app facilitates these meetings by providing profiles, logistics, and conversation prompts, ensuring participants can make the most out of these interactions. The App uses an special API for indoor places to assure students can find the random meeting spot adding a twist to the networking where student would be exploring different parts of the university based on the organizers planning. 
 
