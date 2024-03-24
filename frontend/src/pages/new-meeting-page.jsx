@@ -65,8 +65,11 @@ export const NewMeetingPage = () => {
       console.log(meetingDetails[0])
 
       try {
+        const otherUserId = meetingDetails[0].membersOfMeeting.find(
+          (memberId) => memberId !== userId
+        );
         const response = await axios.get(
-          `http://localhost:3000/user/getuser/${meetingDetails[0].membersOfMeeting[1]}`,
+          `http://localhost:3000/user/getuser/${otherUserId}`,
           {
             withCredentials: true,
           }
