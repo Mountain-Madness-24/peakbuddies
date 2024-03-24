@@ -24,3 +24,16 @@
     margin-top: 1rem;
   }
 }
+
+.step2Form {
+  h2 {
+    font-size: var(--text-size-body);
+    margin-bottom: 1rem;
+  }
+}
+
+.step2Fields {
+  display: grid;
+  gap: 1.5rem;
+  text-align: left;
+}

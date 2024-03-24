@@ -21,7 +21,7 @@ export const LoginPage = () => {
         );
         const data = response.data;
         if (response.status === 200 && data.user) {
-          navigate(`/home/${data.user}`);
+          navigate(`/onboarding/${data.user}`);
         }
         // If not authenticated, nothing happens and the login page stays
       } catch (error) {

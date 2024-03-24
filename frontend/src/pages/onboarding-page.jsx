@@ -4,12 +4,11 @@ import {
   IconOnboardingStep2,
   IconOnboardingStep3,
 } from "../components/icons";
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Import useNavigate
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate
 
 import styles from "./onboarding-page.module.scss";
 import globalStyles from "../globals.module.scss";
-import { redirect, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Step1 = () => {
@@ -40,15 +39,73 @@ const Step1 = () => {
   );
 };
 
-const Step2 = () => {
+const Step2 = ({ userId }) => {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/auth/protected",
+          {
+            withCredentials: true,
+          }
+        );
+        const data = response.data;
+        if (response.status === 200 && data.user) {
+          setName(`${data.userInfo.firstName} ${data.userInfo.lastName}`);
+        } else {
+          console.log("User is not authenticated");
+        }
+      } catch (error) {
+        console.error("Error checking authentication status:", error);
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { school, recentExperience } = event.target;
+
+    try {
+      const res = await axios.patch(
+        "http://localhost:3000/user/updateUser",
+        {
+          school: school.value,
+          recentExperience: recentExperience.value,
+        },
+        { withCredentials: true }
+      );
+      console.log(res);
+      navigate(`/home`);
+    } catch (error) {
+      console.error("Error joining event:", error);
+    }
+  };
+
   return (
     <>
       <h1>Enter Your Info</h1>
+      <form onSubmit={handleSubmit} className={styles.step2Form}>
+        <h2>{name}</h2>
+        <section className={styles.step2Fields}>
+          <FormField label="School" type="text" name="school" />
+          <FormField
+            label="Recent Work Experience"
+            type="text"
+            name="recentExperience"
+          />
+        </section>
+        <Button type="submit">Update Info</Button>
+      </form>
     </>
   );
 };
 
-const Step3 = () => {
+const Step3 = ({ userId }) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -69,6 +126,7 @@ const Step3 = () => {
       console.error("Error joining event:", error);
     }
   };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -83,6 +141,7 @@ const Step3 = () => {
 export const OnboardingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleNext = () => {
     setCurrentStep((step) => step + 1);
@@ -102,7 +161,7 @@ export const OnboardingPage = () => {
       className={styles.onboardingPage}
       buttons={
         <>
-          {currentStep !== 2 && <Button onClick={handleNext}>Next</Button>}
+          {currentStep === 0 && <Button onClick={handleNext}>Next</Button>}
           {currentStep === 2 && (
             <Button variant="tetriary" onClick={handleSkippingJoin}>
               Skip
@@ -117,8 +176,8 @@ export const OnboardingPage = () => {
       }
     >
       {currentStep === 0 && <Step1 />}
-      {currentStep === 1 && <Step2 />}
-      {currentStep === 2 && <Step3 />}
+      {currentStep === 1 && <Step2 userId={id} />}
+      {currentStep === 2 && <Step3 userId={id} />}
     </PageLayout>
   );
 };

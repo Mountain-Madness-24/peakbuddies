@@ -1,11 +1,42 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const User = require('../models/user');
+const passport = require("passport");
+const User = require("../models/user");
 
+router.patch("/updateUser", async (req, res) => {
+  const { school, recentExperience } = req.body;
 
+  try {
+    const userId = req.user.userId;
 
-router.get('/getusers', async (req, res) => {
+    // Update the user's availability to false
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: userId },
+      { $set: { school, recentExperience } },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Respond with success message
+    res.status(200).json({
+      message: "User's school and recent experience updated",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating user's school and recent experience:", error);
+    res
+      .status(500)
+      .json({
+        message: "Failed to update user's school and recent experience",
+        error: error,
+      });
+  }
+});
+
+router.get("/getusers", async (req, res) => {
   try {
     const users = await User.find({});
     res.status(200).json(users);
@@ -15,27 +46,31 @@ router.get('/getusers', async (req, res) => {
   }
 });
 
-router.get('/organizers', async (req, res) => {
-    try {
-      const organizers = await User.find({ isOrganizer: true });
-      res.status(200).json(organizers);
-    } catch (error) {
-      console.error("Error fetching organizers:", error);
-      res.status(500).json({ message: "Failed to fetch organizers", error: error });
-    }
+router.get("/organizers", async (req, res) => {
+  try {
+    const organizers = await User.find({ isOrganizer: true });
+    res.status(200).json(organizers);
+  } catch (error) {
+    console.error("Error fetching organizers:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch organizers", error: error });
+  }
 });
-  
-router.get('/getAvailableUsers', async (req, res) => {
+
+router.get("/getAvailableUsers", async (req, res) => {
   try {
     const availableUsers = await User.find({ isAvailable: true });
     res.status(200).json(availableUsers);
   } catch (error) {
     console.error("Error fetching organizers:", error);
-    res.status(500).json({ message: "Failed to fetch organizers", error: error });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch organizers", error: error });
   }
 });
 
-router.patch('/makeUnavailable', async (req, res) => {
+router.patch("/makeUnavailable", async (req, res) => {
   try {
     const userId = req.user.userId;
 
@@ -53,15 +88,17 @@ router.patch('/makeUnavailable', async (req, res) => {
     // Respond with success message
     res.status(200).json({
       message: "User's availability updated to unavailable",
-      user: updatedUser
+      user: updatedUser,
     });
   } catch (error) {
     console.error("Error updating user's availability:", error);
-    res.status(500).json({ message: "Failed to update user's availability", error: error });
+    res
+      .status(500)
+      .json({ message: "Failed to update user's availability", error: error });
   }
 });
 
-router.patch('/makeAvailable', async (req, res) => {
+router.patch("/makeAvailable", async (req, res) => {
   try {
     const userId = req.user.userId;
 
@@ -79,16 +116,14 @@ router.patch('/makeAvailable', async (req, res) => {
     // Respond with success message
     res.status(200).json({
       message: "User's availability updated to available",
-      user: updatedUser
+      user: updatedUser,
     });
   } catch (error) {
     console.error("Error updating user's availability:", error);
-    res.status(500).json({ message: "Failed to update user's availability", error: error });
+    res
+      .status(500)
+      .json({ message: "Failed to update user's availability", error: error });
   }
 });
 
-
 module.exports = router;
-
-  
-
