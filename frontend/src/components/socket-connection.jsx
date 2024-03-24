@@ -11,6 +11,7 @@ export const EmitEvent = (eventName, data) => {
         console.error('Socket is not connected');
         return;
     }
+    console.log('Emitting event:', eventName, data)
     socket.emit(eventName, data);
 }
 

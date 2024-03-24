@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PageLayout, Avatar, Button } from "../components/";
+import { PageLayout, Avatar, Button, EmitEvent, SocketComponent } from "../components/";
 import {
   IconWork,
   IconSchool,
@@ -12,8 +12,6 @@ import { format, addMinutes } from "date-fns";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./new-meeting-page.module.scss";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 
 export const NewMeetingPage = () => {
   const [meetingDetails, setMeetingDetails] = useState(null);
@@ -26,6 +24,7 @@ export const NewMeetingPage = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchMeetingDetails = async () => {
@@ -87,6 +86,18 @@ export const NewMeetingPage = () => {
     };
   };
 
+  const pingOtherUser = () => {
+    console.log(meetingDetails[0].membersOfMeeting);
+
+    const otherPersonId = meetingDetails[0].membersOfMeeting.find(
+      (memberId) => memberId !== userId
+    );
+
+    console.log("Pinging other person:", otherPersonId);
+    EmitEvent("pingOtherPerson", otherPersonId);
+  };
+
+
   const { time, minutes } = meetingDetails.startingTime
     ? getFormattedTime(meetingDetails.startingTime)
     : { time: "", minutes: "" };
@@ -98,7 +109,7 @@ export const NewMeetingPage = () => {
           <Button onClick={() => navigate(`/meeting/${id}`)}>
             Start Meeting
           </Button>
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={pingOtherUser}>
             {otherUser ? `Ping ${otherUser.firstName}` : "Ping User"}
           </Button>
 
@@ -108,6 +119,7 @@ export const NewMeetingPage = () => {
         </>
       }
     >
+      <SocketComponent userId={userId} />
       <article className={styles.header}>
         <Avatar />
         <section className={styles.title}>
