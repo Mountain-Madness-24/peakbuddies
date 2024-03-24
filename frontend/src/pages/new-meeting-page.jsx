@@ -117,11 +117,10 @@ export const NewMeetingPage = () => {
     EmitEvent("pingOtherPerson", otherPersonId);
   };
 
-  console.log(meetingDetails[0].startingTime)
-
-  const { time, minutes } = meetingDetails[0].startingTime
+  const minutes = 15;
+  const { time } = meetingDetails[0].startingTime
     ? getFormattedTime(meetingDetails[0].startingTime)
-    : { time: "", minutes: "" };
+    : { time: "", minutes: "15" };
 
   return (
     <PageLayout
