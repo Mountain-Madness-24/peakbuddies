@@ -69,6 +69,118 @@ router.get('/getEvents', ensureAuthenticated, function(req, res) {
 
 
 
+// Route to join an event
+router.post('/joinEvent', ensureAuthenticated, async (req, res) => {
+  try {
+    const { eventId } = req.body;
+    const userId = req.user.userId;
+
+    if (!eventId) {
+      return res.status(400).json({ message: "Event ID is required" });
+    }
+
+    // Find the user by userId
+    const user = await User.findOne({ userId: userId });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the event exists
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Check if the user is already joined
+    if (user.events.includes(eventId)) {
+      return res.status(400).json({ message: "User already joined this event" });
+    }
+
+    // Add eventId to the user's events list
+    user.events.push(eventId);
+
+    // Save the user document with the updated events list
+    await user.save();
+
+    // Success response
+    res.status(200).json({ message: "Successfully joined event", events: user.events });
+  } catch (error) {
+    console.error("Error joining event:", error);
+    res.status(500).json({ message: "Failed to join event", error: error });
+  }
+});
+
+
+// // Route to join an event
+// router.post('/joinEvent', async (req, res) => {
+//   try {
+//     const { eventId } = req.body;
+//     const userId = 's3WcZu1X7X';
+
+//     if (!eventId) {
+//       return res.status(400).json({ message: "Event ID is required" });
+//     }
+
+//     // Find the user by userId
+//     const user = await User.findOne({ userId: userId });
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     // Check if the event exists
+//     const event = await Event.findById(eventId);
+//     if (!event) {
+//       return res.status(404).json({ message: "Event not found" });
+//     }
+
+//     // Check if the user is already joined
+//     if (user.events.includes(eventId)) {
+//       return res.status(400).json({ message: "User already joined this event" });
+//     }
+
+//     // Add eventId to the user's events list
+//     user.events.push(eventId);
+
+//     // Save the user document with the updated events list
+//     await user.save();
+
+//     // Success response
+//     res.status(200).json({ message: "Successfully joined event", events: user.events });
+//   } catch (error) {
+//     console.error("Error joining event:", error);
+//     res.status(500).json({ message: "Failed to join event", error: error });
+//   }
+// });
+
+
+// A new route to get an event, also protected
+// router.get('/getEvents', function(req, res) {
+//   // const userId = req.user.userId; 
+//   const userId = 's3WcZu1X7X'
+//   User.find({ userId: userId }).then(user => {
+//     console.log(user);
+
+//     // no search the events corresponding the user event
+//     const eventIds = user[0].events;
+    
+//     Event.find({ '_id': { $in: eventIds } })
+//     .then(events => {
+//       // Successfully found events, return them
+//       res.json(events);
+//     })
+//     .catch(error => {
+//       // Error fetching events
+//       res.status(500).json({ message: "Error fetching events", error: error });
+//     });
+//     // make a search in Event grabbing all the ids that match the ids in user[0].events then return that as a response
+
+//   }).catch(error => {
+//     res.status(500).json({ message: "Error fetching event", error: error });
+//   });
+// });
+
+
+
 
 router.post('/createEvent', async (req, res) => {
   try {
