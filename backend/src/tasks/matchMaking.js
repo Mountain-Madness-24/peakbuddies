@@ -5,7 +5,10 @@ const User = require('../models/user');
 
 async function matchParticipantsAndNotify(event, io) {
   // Assume participants are stored by their ObjectId or a unique identifier in the event.participants
-  const participants = await User.find({ '_id': { $in: event.participants } });
+  const participants = await User.find({ 'userId': { $in: event.participants } });
+
+  console.log(participants)
+
 
   // Simple random matching logic for demonstration. This should be replaced with your actual matching logic.
   while (participants.length >= 2) {
@@ -30,6 +33,7 @@ async function matchParticipantsAndNotify(event, io) {
       io.to(member.socketId).emit('meetingNotification', {
         message: 'You have been matched for a meeting!',
         meetingId: meeting._id,
+        meetingDetails: meeting,
       });
     });
   }
@@ -37,22 +41,25 @@ async function matchParticipantsAndNotify(event, io) {
 
 // Run every minute to check for events starting
 module.exports = function(io) {
-  cron.schedule('* * * * * *', async () => { // TODO: Revert back to '* * * * *' for production
-    const now = new Date();
-    const upcomingEvents = await Event.find({ startDateTime: { $lte: now }, isStarted: false });
+  cron.schedule('* * * * *', async () => { // TODO: Revert back to '* * * * *' for production
+    // get current time, in UTC
+    let now = new Date();
+    now = now.toUTCString();
+    const upcomingEvents = await Event.find({ startDate: { $lte: now }});
 
-    console.log(`"${upcomingEvents.length}" events are starting now!`);
-
-    upcomingEvents.forEach(event => {
+    upcomingEvents.forEach( async (event) => {
       console.log(`Event ${event._id} is starting now!`);
       console.log(`Event details: ${event}`);
 
       setTimeout(async () => {
+        console.log(`Matching participants for event ${event._id}...`)
         await matchParticipantsAndNotify(event, io); // Implement matching and notification
+      }, 1000); // Convert interval to milliseconds
+      //event.intervalOfPing * 60000
 
-        // Update the event as started
-        await Event.findByIdAndUpdate(event._id, { isStarted: true });
-      }, event.intervalOfPing * 60000); // Convert interval to milliseconds
+
+      // Update the event as started
+      await Event.findByIdAndUpdate(event._id, { isStarted: false }); // TODO: Change to true
     });
   });
 };

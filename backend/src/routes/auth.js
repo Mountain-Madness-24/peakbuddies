@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const Event = require('../models/event');
+const Meeting = require('../models/meeting');
 const User = require('../models/user');
 
 // Trigger LinkedIn authentication
