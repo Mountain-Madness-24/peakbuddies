@@ -78,6 +78,16 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('pingOtherPerson', (otherPersonId) => {
+    console.log('Ping other person', otherPersonId);
+
+    // Get the socket id of the other person
+    const otherPersonSocketId = map_socket_to_user[otherPersonId];
+
+    // Emit a message to the other person
+    io.to(otherPersonSocketId).emit('pingOtherPerson', 'You have been pinged by another person');
+  });
+
   // Here you can listen for other events and emit messages to clients
 });
 

@@ -1,4 +1,4 @@
-import { PageLayout, Avatar, Button } from "../components/";
+import { PageLayout, Avatar, Button, EmitEvent } from "../components/";
 import {
   IconWork,
   IconSchool,
@@ -9,12 +9,34 @@ import { useNavigate } from "react-router-dom";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./new-meeting-page.module.scss";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export const NewMeetingPage = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const goHome = () => {
     navigate('/');
+  }
+
+  const getOtherPersonUserId = async () => {
+    // GET /meetings/:meetingId - Returns meeting details
+    try {
+    const meetingDetails = await axios.get(`http://localhost:3000/meetings/${id}`, {
+      withCredentials: true,
+    });
+
+    const membersInMeeting = meetingDetails.data[0].membersOfMeeting;
+    console.log("Members in meeting", membersInMeeting);
+
+    const other = membersInMeeting.filter((member) => member !== "KmrdadwAHJ")[0];
+    EmitEvent('pingOtherPerson', other);
+
+  } catch (error) {
+    console.error("Failed to get meeting details", error);
+  }
+
   }
 
   return (
@@ -22,7 +44,10 @@ export const NewMeetingPage = () => {
       buttons={
         <>
           <Button>Start Meeting</Button>
-          <Button variant="secondary">Ping Bobby</Button>
+          <Button 
+            variant="secondary"
+            onClick={getOtherPersonUserId}
+          >Ping Bobby</Button>
           <Button 
             variant="tetriary"
             onClick={goHome}
