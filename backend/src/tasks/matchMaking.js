@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const Event = require('../models/Event');
+const Event = require('../models/event');
 // Assume a Meeting model and notification mechanism exists
 // const { createMeetingsForEvent, notifyParticipants } = require('../utils/meetingUtils');
 

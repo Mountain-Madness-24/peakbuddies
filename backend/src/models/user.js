@@ -27,7 +27,7 @@ const userSchema = new Schema({
   }, // Adjust based on what info you have
   availability: {type: Boolean, default: false},
   education: String,
-  events: [{ type: String, ref: 'event' }], // Using custom IDs for participants
+  events: [{ type: String }], // Using custom IDs for participants
 });
 
 module.exports = mongoose.model('User', userSchema);
