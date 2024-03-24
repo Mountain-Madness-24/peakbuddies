@@ -117,10 +117,17 @@ export const NewMeetingPage = () => {
     EmitEvent("pingOtherPerson", otherPersonId);
   };
 
-  const minutes = 15;
   const { time } = meetingDetails[0].startingTime
     ? getFormattedTime(meetingDetails[0].startingTime)
-    : { time: "", minutes: "15" };
+    : { time: "", minutes: "" };
+
+  const timeToMeet = meetingDetails[0].startingTime;
+  console.log("TIME TO MEET:", new Date(timeToMeet) - new Date());
+  const timeToMeetInMinutes = Math.floor(
+    (new Date(timeToMeet) - new Date()) / 60000
+  );
+
+
 
   return (
     <PageLayout
@@ -171,7 +178,7 @@ export const NewMeetingPage = () => {
           <IconTime />
           <p className={globalStyles.subtitle}>Time</p>
           <p className={globalStyles.titleSmall}>
-            {time} <br /> IN {minutes} MINS
+            {time} <br /> IN {timeToMeetInMinutes } MINS
           </p>
         </section>
       </article>

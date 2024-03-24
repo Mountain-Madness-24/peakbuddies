@@ -128,8 +128,11 @@ router.post("/joinEvent", ensureAuthenticated, async (req, res) => {
     // Add eventId to the user's events list
     user.events.push(eventId);
 
-    // Save the user document with the updated events list
-    await user.save();
+    // Add user's ID to the event's participants list
+    event.participants.push(userId);
+
+    // Save both user and event documents with the updated data
+    await Promise.all([user.save(), event.save()]);
 
     // Success response
     res
