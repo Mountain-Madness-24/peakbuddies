@@ -4,6 +4,7 @@ const { Server } = require("socket.io");
 const session = require('express-session');
 const passport = require('passport');
 const connectDB = require('./config/db');
+const cors = require('cors'); // Require the cors package
 
 require('./config/passport'); // Import passport configuration
 require('dotenv').config();
@@ -16,6 +17,11 @@ const io = new Server(server);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(cors({
+  origin: true, // Allow any origin
+  credentials: true, // Allow cookies to be sent from the frontend
+}));
 
 // Connect to MongoDB
 connectDB();
