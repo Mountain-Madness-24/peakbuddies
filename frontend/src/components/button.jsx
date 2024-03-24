@@ -1,8 +1,8 @@
 import styles from "./button.module.scss";
 
-export const Button = ({ children, variant, icon }) => {
+export const Button = ({ children, variant, icon, onClick }) => {
   return (
-    <button className={`${styles.button} ${styles[variant]}`}>
+    <button onClick={onClick} className={`${styles.button} ${styles[variant]}`}>
       {icon}
       {children}
     </button>
