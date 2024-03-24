@@ -10,6 +10,7 @@ import {
   HomePage,
   MeetingPage,
   EventPage,
+  CreateEventPage,
 } from "./pages";
 
 const App = () => {
@@ -21,6 +22,8 @@ const App = () => {
         <Route path="/new-meeting/:id" element={<NewMeetingPage />} />
         <Route path="/meeting/:id" element={<MeetingPage />} />
         <Route path="/event/:id" element={<EventPage />} />
+        <Route path="/create-event" element={<CreateEventPage />} />
+        {/* Redirect all unmatched routes to /login */}
         <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </Router>

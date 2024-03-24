@@ -10,6 +10,14 @@
     width: 100%;
   }
 
+  nav {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background: none;
+    right: 0;
+  }
+
   main {
     max-width: var(--width-app-max);
     min-width: var(--width-app-max);
