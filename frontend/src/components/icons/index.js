@@ -4,3 +4,5 @@ export { IconSchool } from "./icon-school";
 export { IconWork } from "./icon-work";
 export { IconLocation } from "./icon-location";
 export { IconTime } from "./icon-time";
+export { IconIntro } from "./icon-intro";
+export { IconIcebreaker } from "./icon-icebreaker";
