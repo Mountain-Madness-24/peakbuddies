@@ -16,6 +16,7 @@ export const SocketComponent = ({ userId }) => {
         // Listen to the 'connect' event to log the connection status
 
         socket.on('connect', () => {
+            console.log('userId', userId);
             socket.emit('userLogin', userId);
         })
 
