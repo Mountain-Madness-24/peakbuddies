@@ -1,4 +1,5 @@
 import { PageLayout, Button, Avatar } from "../components";
+import axios from "axios";
 import {
   IconIntro,
   IconIcebreaker,
@@ -8,6 +9,7 @@ import {
 } from "../components/icons";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./meeting-page.module.scss";
@@ -35,6 +37,8 @@ const MeetingStageIndicator = ({ icon, label, isActive = false }) => {
     </article>
   );
 };
+
+
 
 const Timer = ({
   durationMinutes,
@@ -82,7 +86,9 @@ const Timer = ({
 };
 
 export const MeetingPage = () => {
+  const navigate = useNavigate();
   const [currentStage, setCurrentStage] = useState("intro");
+
   const [currentTimerDuration, setCurrentTimerDuration] = useState(
     STAGES[currentStage].duration
   );
@@ -102,12 +108,34 @@ export const MeetingPage = () => {
     }
   };
 
+  const endMeeting = async () => {
+    try {
+      // Make the user available again when ending the meeting
+      await axios.patch('http://localhost:3000/user/makeAvailable', {}, {
+        withCredentials: true,
+      });
+      // After updating the availability, navigate to the home page
+      navigate("/home");
+    } catch (error) {
+      console.error("Error making user available:", error);
+      // Handle the error, for example by showing an error message to the user
+    }
+  };
+
+
+
+  
+
   return hasMeetingEnded ? (
     <PageLayout
       className={styles.meetingEndedPage}
       buttons={
         <>
-          <Button>Back Home</Button>
+          <Button
+            onClick={endMeeting}
+          >
+            Back Home
+          </Button>
         </>
       }
     >
@@ -126,7 +154,9 @@ export const MeetingPage = () => {
       className={styles.meetingPage}
       buttons={
         <>
-          <Button variant="secondary">End Meeting</Button>
+          <Button variant="secondary" onClick={endMeeting}>
+            End Meeting
+          </Button>
         </>
       }
     >
