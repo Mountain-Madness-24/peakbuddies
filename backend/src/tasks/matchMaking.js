@@ -19,6 +19,16 @@ function shuffleArray(array) {
   return array;
 }
 
+const icebreakerQuestions = [
+  "What's the worst job you've ever had?", 
+  "What color is your Bugahtti?",
+  "If you were a worm, would you still love me?",
+  "What is your favourite project you've worked on?",
+  "What technology or tool are you hoping to learn more about during this hackathon?",
+  "What's your favorite programming language or technology, and why?",
+  "What's your 'pump-up' music for coding or working on tech projects?",
+];
+
 async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
   // Assume participants are stored by their ObjectId or a unique identifier in the event.participants
   const usersInEvent = await User.find({ 'userId': { $in: event.participants }, availability: true });
@@ -37,6 +47,9 @@ async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
   const locationName = randomMeetingRoom.name;
   const loactionInfo = randomMeetingRoom.latLong;
 
+  const subsetOfQuetions = shuffleArray(icebreakerQuestions).slice(0, 3); // Get first 3 questions
+
+  console.log(participants);
   while (participants.length >= 2) {
     const match = [participants.pop(), participants.pop()]; // Take two participants out for a meeting
 
@@ -48,11 +61,7 @@ async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
         lon: loactionInfo.long
       }, // Example, set accordingly
       startingTime: new Date(), // Set this according to your logic
-      icebreakerQuestions: [
-        "What's the worst job you've ever had?", 
-        "What color is your Bugahtti?",
-        "If you were a worm, would you still love me?"
-      ], // Example questions
+      icebreakerQuestions: subsetOfQuetions, // Example questions
       eventStatus: "Scheduled",
       membersOfMeeting: match.map(m => m.userId), // Storing participant IDs
       isFinished: false,
