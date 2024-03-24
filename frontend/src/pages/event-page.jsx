@@ -8,103 +8,7 @@ import globalStyles from "../globals.module.scss";
 import styles from "./event-page.module.scss";
 
 export const EventPage = () => {
-  const [participants, setParticipants] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 3,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 4,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 5,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-    {
-      id: 6,
-      name: "John Doe",
-      avatar: "https://source.unsplash.com/random/?portrait",
-    },
-  ]);
+  const [participants, setParticipants] = useState([]);
   const [eventName, setEventName] = useState(""); // State for event name
   const { id } = useParams(); // Extract the event ID from the URL parameters
 
@@ -120,6 +24,7 @@ export const EventPage = () => {
         );
         console.log(response.data); // Log the event object
         setEventName(response.data.nameOfEvent); // Update the event name state
+        setParticipants(response.data.participants); // Update the participants state
       } catch (error) {
         console.error("Error fetching event details:", error);
       }
@@ -142,9 +47,9 @@ export const EventPage = () => {
           {participants.length} People to Connect With
         </span>
         <section className={styles.participantGrid}>
-          {participants.map(({ id, avatar }, index) => (
+          {participants.map((id, index) => (
             <a key={id || index}>
-              <Avatar src={avatar} />
+              <Avatar id={id} />
             </a>
           ))}
         </section>
