@@ -6,3 +6,5 @@ export { IconLocation } from "./icon-location";
 export { IconTime } from "./icon-time";
 export { IconProfile } from "./icon-profile";
 export { IconHome } from "./icon-home";
+export { IconIntro } from "./icon-intro";
+export { IconIcebreaker } from "./icon-icebreaker";

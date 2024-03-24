@@ -15,16 +15,20 @@ passport.use(new LinkedInStrategy({
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
-        let user = await User.findOne({userID: profile.sub});
-        
+      console.log(profile.id)  
+      let user = await User.findOne({userId: profile.id});
+
         if (!user) {
             const details = {
-                userID: profile.id,
+                userId: profile.id,
                 firstName: profile.givenName,
                 lastName: profile.familyName,
                 email: profile.email,
                 picture: profile.picture,
             };
+            
+            console.log("details" + details.userId)
+
 
             user = await new User(details).save();
         }

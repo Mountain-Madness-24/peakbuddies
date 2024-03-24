@@ -10,7 +10,7 @@ const meetingSchema = new mongoose.Schema({
   startingTime: Date,
   icebreakerQuestions: [String],
   eventStatus: String,
-  membersOfMeeting: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  membersOfMeeting: [{ type: String, ref: 'User' }],
   isFinished: Boolean,
   isStarted: Boolean,
 });
