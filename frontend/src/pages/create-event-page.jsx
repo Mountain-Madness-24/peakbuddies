@@ -1,10 +1,13 @@
 import { PageLayout, HeaderImage, FormField, Button } from "../components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./create-event-page.module.scss";
 
 export const CreateEventPage = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { nameOfEvent, description, startDate, endDate } = event.target;
@@ -20,7 +23,8 @@ export const CreateEventPage = () => {
         },
         { withCredentials: true }
       );
-      console.log(res);
+
+      navigate(`/event/${res.data.eventId}`);
     } catch (error) {
       console.error("Error creating event:", error);
     }

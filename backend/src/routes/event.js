@@ -70,6 +70,32 @@ router.get("/getEvents", ensureAuthenticated, function (req, res) {
     });
 });
 
+// A new route to get an event, also protected
+router.get("/getCreatedEvents", ensureAuthenticated, function (req, res) {
+  const userId = req.user.userId;
+  User.find({ userId: userId })
+    .then((user) => {
+      console.log(user);
+
+      // no search the events corresponding the user event
+      Event.find({ adminsOfTheEvent: { $in: [userId] } })
+        .then((events) => {
+          // Successfully found events, return them
+          res.json(events);
+        })
+        .catch((error) => {
+          // Error fetching events
+          res
+            .status(500)
+            .json({ message: "Error fetching events", error: error });
+        });
+      // make a search in Event grabbing all the ids that match the ids in user[0].events then return that as a response
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Error fetching event", error: error });
+    });
+});
+
 // Route to join an event
 router.post("/joinEvent", ensureAuthenticated, async (req, res) => {
   try {
