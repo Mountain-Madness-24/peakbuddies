@@ -11,3 +11,6 @@ export { IconIcebreaker } from "./icon-icebreaker";
 export { IconShuffle } from "./icon-shuffle";
 export { IconCelebration } from "./icon-celebration";
 export { IconPeople } from "./icon-people";
+export { IconOnboardingStep1 } from "./icon-onboarding-step1";
+export { IconOnboardingStep2 } from "./icon-onboarding-step2";
+export { IconOnboardingStep3 } from "./icon-onboarding-step3";

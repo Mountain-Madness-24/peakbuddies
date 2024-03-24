@@ -1,0 +1,26 @@
+.onboardingPage {
+  text-align: center;
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+}
+
+.step1Icons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step1Icons > section {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  p {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+}

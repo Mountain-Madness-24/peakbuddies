@@ -20,6 +20,10 @@ export const HomePage = () => {
     navigate(`/create-event`);
   };
 
+  const handleJoinEventButton = () => {
+    navigate(`/join-event`);
+  };
+
   useEffect(() => {
     // Function to fetch events
     const fetchEvents = async () => {
@@ -46,7 +50,9 @@ export const HomePage = () => {
       header={<HeaderImage />}
       buttons={
         <>
-          <Button variant="primary">Join Event</Button>
+          <Button variant="primary" onClick={handleJoinEventButton}>
+            Join Event
+          </Button>
           <Button variant="secondary" onClick={handleCreateEventButton}>
             Create Event
           </Button>
