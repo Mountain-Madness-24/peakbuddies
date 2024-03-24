@@ -7,11 +7,11 @@ export const NavBar = ({ className, userId }) => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate(`/home/${userId}`);
+    navigate(`/`);
   };
 
   const handleProfileClick = () => {
-    navigate(`/profile/${userId}`);
+    navigate(`/`);
   };
 
   return (
