@@ -5,18 +5,28 @@ import {
   IconTime,
   IconLocation,
 } from "../components/icons";
+import { useNavigate } from "react-router-dom";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./new-meeting-page.module.scss";
 
 export const NewMeetingPage = () => {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate('/');
+  }
+
   return (
     <PageLayout
       buttons={
         <>
           <Button>Start Meeting</Button>
           <Button variant="secondary">Ping Bobby</Button>
-          <Button variant="tetriary">Decline Meeting</Button>
+          <Button 
+            variant="tetriary"
+            onClick={goHome}
+          >Decline Meeting</Button>
         </>
       }
     >
