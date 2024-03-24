@@ -9,7 +9,7 @@ import {
 } from "../components/icons";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./meeting-page.module.scss";
@@ -37,6 +37,7 @@ const MeetingStageIndicator = ({ icon, label, isActive = false }) => {
     </article>
   );
 };
+
 
 const Timer = ({
   durationMinutes,
@@ -86,6 +87,9 @@ const Timer = ({
 export const MeetingPage = () => {
   const navigate = useNavigate();
   const [currentStage, setCurrentStage] = useState("intro");
+  const { id } = useParams();
+
+  const [otherUserName, setOtherUserName] = useState("Zachary Channnnnn"); // Default name, will be updated
 
   const [currentTimerDuration, setCurrentTimerDuration] = useState(
     STAGES[currentStage].duration
@@ -105,6 +109,35 @@ export const MeetingPage = () => {
       setCurrentIcebreakerQuestion(currentIcebreakerQuestion + 1);
     }
   };
+
+  useEffect(() => {
+    const fetchMeetingAndUserDetails = async () => {
+      try {
+        // Fetch meeting details
+        const meetingResponse = await axios.get(`http://localhost:3000/meetings/${id}`, {
+          withCredentials: true,
+        });
+        const meetingDetails = meetingResponse.data;
+
+        // Assuming you have a way to get the current user's ID
+        const currentUserId = localStorage.getItem("userId");
+        const otherUserId = meetingDetails[0].membersOfMeeting.find(memberId => memberId !== currentUserId);
+
+        // Fetch other user's details
+        const userResponse = await axios.get(`http://localhost:3000/user/getuser/${otherUserId}`, {
+          withCredentials: true,
+        });
+        const otherUserDetails = userResponse.data;
+
+        // Update state with other user's name
+        setOtherUserName(`${otherUserDetails.firstName} ${otherUserDetails.lastName}`);
+      } catch (error) {
+        console.error("Error fetching meeting or user details:", error);
+      }
+    };
+
+    fetchMeetingAndUserDetails();
+  }, [id]);
 
   const endMeeting = async () => {
     try {
@@ -136,7 +169,7 @@ export const MeetingPage = () => {
       <IconCelebration />
       <div>
         <p className={globalStyles.subtitle}>You just connected with</p>
-        <h1>Zachary Chan</h1>
+        <h1>{otherUserName}</h1> 
       </div>
       <section>
         <Avatar />
@@ -157,7 +190,7 @@ export const MeetingPage = () => {
       <p>05:23</p>
       <article className={styles.title}>
         <p className={globalStyles.subtitle}>Currently Meeting</p>
-        <h1>Zachary Chan</h1>
+        <h1>{otherUserName}</h1> 
       </article>
       <article className={styles.meetingStageTimeline}>
         <MeetingStageIndicator
