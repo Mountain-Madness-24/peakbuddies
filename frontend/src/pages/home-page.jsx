@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import { PageLayout, Button, HeaderImage, NavBar } from "../components/";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useParams } from "react-router-dom"; // Import useParams from react-router-dom
 import styles from "./home-page.module.scss";
 
 export const HomePage = () => {
-  const events = [
-    { name: 'Mountain Madness 2024', path: '/event/mountain-madness' },
-    { name: 'ChaosHacks 2024', path: '/event/chaoshacks' }
-  ];
+  const { id } = useParams(); // Extract the user ID from the URL
+  const [events, setEvents] = useState([]); // Initialize events state
+
+  useEffect(() => {
+    // Define the function to fetch events
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/event/getEvents', {
+          withCredentials: true, 
+        });
+        setEvents(response.data); 
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents(); 
+  }, [id]); 
 
   return (
     <PageLayout
@@ -24,8 +39,8 @@ export const HomePage = () => {
         <h1>YOUR EVENTS</h1>
         <div className={styles.eventList}>
           {events.map((event, index) => (
-            <Link to={event.path} key={index} className={styles.eventItem}>
-              {event.name}
+            <Link to={`/event/${event._id}`} key={index} className={styles.eventItem}>
+              {event.nameOfEvent}
             </Link>
           ))}
         </div>
