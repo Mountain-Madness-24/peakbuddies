@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PageLayout, Button, HeaderImage, NavBar } from "../components/";
+import { PageLayout, Button, HeaderImage, NavBar, SocketComponent } from "../components/";
 import { Link, useParams  } from "react-router-dom";
 import styles from "./home-page.module.scss";
 
@@ -53,6 +53,7 @@ export const HomePage = () => {
           ))}
         </div>
       </div>
+      <SocketComponent userId={id} />
     </PageLayout>
   );
 };

@@ -13,7 +13,14 @@ const matchMaking = require('./tasks/matchMaking'); // Import the match making t
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: true, 
+    methods: ["GET", "POST"], 
+    credentials: true 
+  }
+});
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
