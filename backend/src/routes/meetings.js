@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+}); 
 
 // GET /meetings/:meetingId - Returns meeting details
 router.get('/:meetingId', async (req, res) => {

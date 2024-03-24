@@ -3,20 +3,39 @@ const Event = require('../models/event');
 const Meeting = require('../models/meeting');
 const User = require('../models/user');
 
+function shuffleArray(array) {
+  let currentIndex = array.length, temporaryValue, randomIndex;
+
+  while (currentIndex !== 0) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
   // Assume participants are stored by their ObjectId or a unique identifier in the event.participants
-  const participants = await User.find({ 'userId': { $in: event.participants } });
+  const usersInEvent = await User.find({ 'userId': { $in: event.participants }, availability: true });
 
-  console.log(participants)
-
-  // list of all sockets
-  const sockets = io.sockets.sockets;
+  // shuffle participants
+  participants = shuffleArray(usersInEvent);
 
   // for all participants, find their socket add it to their info
   participants.forEach(participant => {
     participant.socketId = map_socket_to_user[participant.userId];
   });
 
+  const numMeetingRooms = event.meetingRooms.length;
+  const randomMeetingRoom = event.meetingRooms[Math.floor(Math.random() * numMeetingRooms)];
+
+  const locationName = randomMeetingRoom.name;
+  const loactionInfo = randomMeetingRoom.latLong;
 
   // Simple random matching logic for demonstration. This should be replaced with your actual matching logic.
   while (participants.length >= 2) {
@@ -24,10 +43,14 @@ async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
 
     // Create a new meeting
     const meeting = new Meeting({
-      locationName: "Virtual Location", // Example, set accordingly
-      locationLatLon: { lat: 0, lon: 0 }, // Example, set accordingly
+      locationName: locationName, // Example, set accordingly
+      locationLatLon: loactionInfo, // Example, set accordingly
       startingTime: new Date(), // Set this according to your logic
-      icebreakerQuestions: ["Question 1?", "Question 2?"], // Example questions
+      icebreakerQuestions: [
+        "What's the worst job you've ever had?", 
+        "What color is your Bugahtti?",
+        "If you were a worm, would you still love me?"
+      ], // Example questions
       eventStatus: "Scheduled",
       membersOfMeeting: match.map(m => m.userId), // Storing participant IDs
       isFinished: false,
@@ -83,7 +106,7 @@ module.exports = function(io, map_socket_to_user) {
       setTimeout(async () => {
         console.log(`Matching participants for event ${event._id}...`)
         await matchParticipantsAndNotify(event, io, map_socket_to_user); // Implement matching and notification
-      }, event.intervalOfPing * 60000); // Convert interval to milliseconds
+      }, 1000); // Convert interval to milliseconds
 
 
       // Update the event as started
