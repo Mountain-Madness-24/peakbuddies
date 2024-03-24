@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
+    
 
-const SOCKET_SERVER_URL = 'http://localhost:3000';
+const SOCKET_SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000';
 
 let socket = null;
 

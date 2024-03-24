@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import globalStyles from "../globals.module.scss";
 import styles from "./home-page.module.scss";
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 
 export const HomePage = () => {
   const [events, setEvents] = useState([]); // Initialize events state
@@ -33,7 +35,7 @@ export const HomePage = () => {
       try {
         // Adjust the request URL as needed to match your backend endpoint
         const response = await axios.get(
-          "http://localhost:3000/event/getEvents",
+          `${apiUrl}/event/getEvents`,
           {
             withCredentials: true, // Necessary for sessions to work across domains
           }
@@ -53,7 +55,7 @@ export const HomePage = () => {
       try {
         // Adjust the request URL as needed to match your backend endpoint
         const response = await axios.get(
-          "http://localhost:3000/event/getCreatedEvents",
+          `${apiUrl}/event/getCreatedEvents`,
           {
             withCredentials: true, // Necessary for sessions to work across domains
           }

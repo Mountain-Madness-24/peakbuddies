@@ -3,6 +3,7 @@ import axios from "axios";
 import { PageLayout, NavBar, Avatar, HeaderImage, Button } from "../components";
 import { IconSchool, IconWork } from "../components/icons";
 import { useParams, useNavigate } from "react-router-dom"; // Import useParams
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 import globalStyles from "../globals.module.scss";
 import styles from "./profile-page.module.scss";
@@ -18,7 +19,7 @@ export const ProfilePage = () => {
         // Adjust the URL as necessary to match your backend endpoint
         // Note: Using POST method as defined in your backend
         const response = await axios.get(
-          `http://localhost:3000/user//getuser/${id}`,
+          `${apiUrl}/user//getuser/${id}`,
           { withCredentials: true }
         );
         console.log(response.data); // Log the event object

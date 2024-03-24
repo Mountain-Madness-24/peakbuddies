@@ -10,6 +10,8 @@ import {
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 
 import globalStyles from "../globals.module.scss";
 import styles from "./meeting-page.module.scss";
@@ -114,7 +116,7 @@ export const MeetingPage = () => {
     const fetchMeetingAndUserDetails = async () => {
       try {
         // Fetch meeting details
-        const meetingResponse = await axios.get(`http://localhost:3000/meetings/${id}`, {
+        const meetingResponse = await axios.get(`${apiUrl}/meetings/${id}`, {
           withCredentials: true,
         });
         const meetingDetails = meetingResponse.data;
@@ -124,7 +126,7 @@ export const MeetingPage = () => {
         const otherUserId = meetingDetails[0].membersOfMeeting.find(memberId => memberId !== currentUserId);
 
         // Fetch other user's details
-        const userResponse = await axios.get(`http://localhost:3000/user/getuser/${otherUserId}`, {
+        const userResponse = await axios.get(`${apiUrl}/user/getuser/${otherUserId}`, {
           withCredentials: true,
         });
         const otherUserDetails = userResponse.data;
@@ -143,7 +145,7 @@ export const MeetingPage = () => {
     try {
       // Make the user available again when ending the meeting
       await axios.patch(
-        "http://localhost:3000/user/makeAvailable",
+        `${apiUrl}/user/makeAvailable`,
         {},
         {
           withCredentials: true,

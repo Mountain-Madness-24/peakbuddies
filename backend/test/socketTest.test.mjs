@@ -1,6 +1,7 @@
 import { io } from 'socket.io-client';
 import { expect } from 'chai';
 
+
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -11,7 +12,7 @@ describe("Socket.IO Tests", function() {
   let socket;
 
   before(function(done) {
-    socket = io("http://localhost:3000");
+    socket = io(process.env.SERVER_URL || 'http://localhost:3000');
     socket.on('connect', () => {
       console.log('Connected to server!');
     });

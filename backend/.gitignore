@@ -18,3 +18,4 @@ node_modules/
 
 # Windows folder attributes
 Thumbs.db
+.vercel

@@ -3,6 +3,7 @@ import axios from "axios";
 import { PageLayout, NavBar, Avatar, HeaderImage } from "../components";
 import { IconPeople } from "../components/icons";
 import { useParams } from "react-router-dom"; // Import useParams
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 import globalStyles from "../globals.module.scss";
 import styles from "./event-page.module.scss";
@@ -18,7 +19,7 @@ export const EventPage = () => {
         // Adjust the URL as necessary to match your backend endpoint
         // Note: Using POST method as defined in your backend
         const response = await axios.post(
-          "http://localhost:3000/event/getEvent",
+          `${apiUrl}/event/getEvent`,
           { eventId: id }, // Pass event ID in the request body
           { withCredentials: true }
         );

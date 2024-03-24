@@ -10,6 +10,8 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { format, addMinutes } from "date-fns";
 import mapboxgl from "mapbox-gl";
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 
 import globalStyles from "../globals.module.scss";
 import styles from "./new-meeting-page.module.scss";
@@ -55,7 +57,7 @@ export const NewMeetingPage = () => {
     const fetchMeetingDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/meetings/${id}`,
+          `${apiUrl}/meetings/${id}`,
           {
             withCredentials: true,
           }
@@ -73,7 +75,7 @@ export const NewMeetingPage = () => {
   const startMeeting = async () => {
     try {
       // Make the user unavailable before starting the meeting
-      await axios.patch('http://localhost:3000/user/makeUnavailable', {}, {
+      await axios.patch(`${apiUrl}/user/makeUnavailable`, {}, {
         withCredentials: true,
       });
       // After making the user unavailable, navigate to the meeting
@@ -94,7 +96,7 @@ export const NewMeetingPage = () => {
           (memberId) => memberId !== userId
         );
         const response = await axios.get(
-          `http://localhost:3000/user/getuser/${otherUserId}`,
+          `${apiUrl}/user/getuser/${otherUserId}`,
           {
             withCredentials: true,
           }

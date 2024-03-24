@@ -12,6 +12,9 @@ import globalStyles from "../globals.module.scss";
 import { redirect, useParams } from "react-router-dom";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
+
 export const JoinEventPage = () => {
   const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ export const JoinEventPage = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/event/joinEvent",
+        `${apiUrl}/event/joinEvent`,
         {
           eventId: eventId.value,
         },

@@ -5,6 +5,8 @@ import { IconLinkedIn, IconLogo } from "../components/icons";
 import globalStyles from "../globals.module.scss";
 import styles from "./login-page.module.scss";
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export const LoginPage = () => {
   // Define checkAuthentication as a standalone function that both useEffect and handleLogin can call
   const checkAuthentication = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/auth/protected", {
+      const response = await axios.get(`${apiUrl}/auth/protected`, {
         withCredentials: true,
       });
       const data = response.data;
@@ -34,7 +36,7 @@ export const LoginPage = () => {
 
   const handleLogin = () => {
     const loginWindow = window.open(
-      "http://localhost:3000/auth/linkedin",
+      `${apiUrl}/auth/linkedin`,
       "Login with LinkedIn",
       "width=800,height=600"
     );

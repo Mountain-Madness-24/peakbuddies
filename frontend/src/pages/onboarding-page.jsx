@@ -6,6 +6,7 @@ import {
 } from "../components/icons";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 import styles from "./onboarding-page.module.scss";
 import globalStyles from "../globals.module.scss";
@@ -47,7 +48,7 @@ const Step2 = ({ userId }) => {
     const getUserInfo = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/auth/protected",
+          `${apiUrl}/auth/protected `,
           {
             withCredentials: true,
           }
@@ -72,7 +73,7 @@ const Step2 = ({ userId }) => {
 
     try {
       const res = await axios.patch(
-        "http://localhost:3000/user/updateUser",
+        `${apiUrl}/user/updateUser`,
         {
           school: school.value,
           recentExperience: recentExperience.value,
@@ -114,7 +115,7 @@ const Step3 = ({ userId }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/event/joinEvent",
+        `${apiUrl}/event/joinEvent`,
         {
           eventId: eventId.value,
         },

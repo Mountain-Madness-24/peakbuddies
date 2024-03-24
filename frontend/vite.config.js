@@ -1,7 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      // Define aliases if needed
+    }
+  },
+  build: {
+    rollupOptions: {
+      // Optional: Configure Rollup options if you have specific needs
+    }
+  },
+  // Ensure the correct handling of .env variables for different modes if needed
 });

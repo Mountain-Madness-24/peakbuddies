@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { PageLayout, HeaderImage, FormField, Button } from "../components";
 import styles from "./create-event-page.module.scss";
+const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 export const CreateEventPage = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export const CreateEventPage = () => {
     try {
       console.log(locations);
       const res = await axios.post(
-        "http://localhost:3000/event/createEvent",
+        `${apiUrl}/event/createEvent`,
         {
           nameOfEvent: nameOfEvent.value,
           description: description.value,
