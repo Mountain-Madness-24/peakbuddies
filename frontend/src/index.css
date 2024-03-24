@@ -67,3 +67,7 @@ h3 {
   font-size: var(--text-size-title);
   text-transform: uppercase;
 }
+
+.map-container {
+  height: 400px;
+}
