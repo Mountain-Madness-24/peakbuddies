@@ -1,32 +1,33 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const Event = require('../models/event');
-const Meeting = require('../models/meeting');
-const User = require('../models/user');
+const passport = require("passport");
+const Event = require("../models/event");
+const Meeting = require("../models/meeting");
+const User = require("../models/user");
 
 // Trigger LinkedIn authentication
-router.get('/linkedin',
-  passport.authenticate('linkedin'));
+router.get("/linkedin", passport.authenticate("linkedin"));
 
-router.get('/', function(req, res) {
-  res.redirect('/auth/linkedin');
+router.get("/", function (req, res) {
+  res.redirect("/auth/linkedin");
 });
 
 // Handle callback from LinkedIn
-router.get('/linkedin/callback',
-  passport.authenticate('linkedin', { failureRedirect: '/login' }),
-  function(req, res) {
+router.get(
+  "/linkedin/callback",
+  passport.authenticate("linkedin", { failureRedirect: "/login" }),
+  function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+    res.redirect("/");
+  }
+);
 
 // // sample codes by Kian for testing UI
 // router.post('/testlogin', async function(req, res) {
 //     const user =  await User.findOne({email: req.body.email});
 //     if(!user){
 //         res.status(404).json({ message: "Incorrect email", isSuccess: false});
-//     }    
+//     }
 //     else{
 //         const validPassword = req.body.password ==  user.password;
 //         if(!validPassword){
@@ -38,8 +39,6 @@ router.get('/linkedin/callback',
 //         }
 //     }
 // });
-
-
 
 // router.post('/testsignup', async (req, res) => {
 //   try {
@@ -71,17 +70,17 @@ router.get('/linkedin/callback',
 //   }
 // });
 
-
 // write a protected route that only logged in users can access
-router.get('/protected', function(req, res) {
-  console.log('req.isAuthenticated()', req.isAuthenticated());
-  
-
-
+router.get("/protected", function (req, res) {
+  console.log("req.isAuthenticated()", req.isAuthenticated());
 
   if (req.isAuthenticated()) {
     console.log(`You are authenticated!`);
-    res.status(200).json({ message: "You are authenticated", user: req.user.userId });
+    res.status(200).json({
+      message: "You are authenticated",
+      user: req.user.userId,
+      userInfo: req.user,
+    });
   } else {
     res.status(401).json({ message: "You are not authenticated" });
   }
