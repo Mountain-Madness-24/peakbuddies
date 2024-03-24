@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { PageLayout, Avatar, Button, EmitEvent, SocketComponent } from "../components/";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../components/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { format, addMinutes } from "date-fns";
+import mapboxgl from "mapbox-gl";
 
 import globalStyles from "../globals.module.scss";
 import styles from "./new-meeting-page.module.scss";
@@ -25,7 +26,31 @@ export const NewMeetingPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const userId = localStorage.getItem("userId");
+  const mapContainer = useRef(null);
+  
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
 
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoia2lhbmhrNiIsImEiOiJjbHU1YzY2NHcxdDA3MmtwcHlhbHp5eTRxIn0.gd5SsAWT75NUaNwTwB21Zg";
+      const map = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [meetingDetails[0].locationLatLon.lon, meetingDetails[0].locationLatLon.lat],
+        // center: [-122.91813898293222, 49.277016401899544],
+        zoom: 15,
+      });
+      console.log([meetingDetails[0].locationLatLon.lon, meetingDetails[0].locationLatLon.lat])
+      const marker = new mapboxgl.Marker().setLngLat( [meetingDetails[0].locationLatLon.lon, meetingDetails[0].locationLatLon.lat]).addTo(map);
+
+    });
+  }, []); 
+
+
+  
+  
+  // Depend on currentMarker to ensure marker is managed correctly
   useEffect(() => {
     const fetchMeetingDetails = async () => {
       try {
@@ -131,6 +156,9 @@ export const NewMeetingPage = () => {
 
   return (
     <PageLayout
+    header={<>        
+      {mapContainer && <div ref={mapContainer} style={{ width: "100%", height: "164px" }}></div>}
+    </>}
       buttons={
         <>
           <Button onClick={startMeeting}>
@@ -147,6 +175,18 @@ export const NewMeetingPage = () => {
       }
     >
       <SocketComponent userId={userId} />
+      <div 
+        style={{ 
+            position: "absolute",
+            left: "0px",
+            top: "0px",
+            bottom: "-1px",
+            height: "156px", 
+            width:"100%", 
+            transform: "translateY(10px)",
+            backgroundImage: `linear-gradient(180deg, rgba(9,9,11,0) 30%, rgba(9,9,11,1) 100%)`}}>
+
+      </div>
       <article className={styles.header}>
         <Avatar />
         <section className={styles.title}>
