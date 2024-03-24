@@ -37,14 +37,16 @@ async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
   const locationName = randomMeetingRoom.name;
   const loactionInfo = randomMeetingRoom.latLong;
 
-  // Simple random matching logic for demonstration. This should be replaced with your actual matching logic.
   while (participants.length >= 2) {
     const match = [participants.pop(), participants.pop()]; // Take two participants out for a meeting
 
     // Create a new meeting
     const meeting = new Meeting({
       locationName: locationName, // Example, set accordingly
-      locationLatLon: loactionInfo, // Example, set accordingly
+      locationLatLon: {
+        lat: loactionInfo.lat,
+        lon: loactionInfo.long
+      }, // Example, set accordingly
       startingTime: new Date(), // Set this according to your logic
       icebreakerQuestions: [
         "What's the worst job you've ever had?", 

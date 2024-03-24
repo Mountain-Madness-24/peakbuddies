@@ -1,0 +1,51 @@
+.navBar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background: none;
+  right: 0;
+}
+
+.participantGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.75rem;
+  align-items: center;
+  cursor: pointer;
+
+  & > * {
+    cursor: pointer;
+    transition: transform 0.15s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.joinedTag {
+  margin: 0.5rem auto 0 auto;
+  font-size: var(--text-size-body-small);
+  height: 2rem;
+  text-transform: uppercase;
+  background-color: var(--color-zinc-900);
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 64px;
+  width: fit-content;
+  padding: 0 0.75rem;
+}
+
+.participantsTag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem auto 1.5rem auto;
+  gap: 0.5rem;
+}
