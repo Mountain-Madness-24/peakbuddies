@@ -52,6 +52,7 @@ async function matchParticipantsAndNotify(event, io, map_socket_to_user) {
   console.log(participants);
   while (participants.length >= 2) {
     const match = [participants.pop(), participants.pop()]; // Take two participants out for a meeting
+    console.log(`Matching participants ${match[0].userId} and ${match[1].userId}...`);
 
     // Create a new meeting
     const meeting = new Meeting({
