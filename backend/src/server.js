@@ -1,14 +1,18 @@
 const express = require('express');
+const http = require('http');
+const { Server } = require("socket.io");
 const session = require('express-session');
 const passport = require('passport');
 const connectDB = require('./config/db');
 
 require('./config/passport'); // Import passport configuration
 require('dotenv').config();
+const matchMaking = require('./tasks/matchMaking'); // Import the match making task
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -36,6 +40,20 @@ app.use('/event', require('./routes/event'));
 app.use('/user', require('./routes/userRoute'));
 app.use('/meetings', require('./routes/meetings'));
 
-app.listen(PORT, () => {
+io.on('connection', (socket) => {
+  console.log('A user connected', socket.id);
+
+  // Listen for disconnect
+  socket.on('disconnect', () => {
+    console.log('User disconnected', socket.id);
+  });
+
+  // Here you can listen for other events and emit messages to clients
+});
+
+matchMaking(io);
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

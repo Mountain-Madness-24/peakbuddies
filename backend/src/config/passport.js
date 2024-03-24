@@ -14,8 +14,6 @@ passport.use(new LinkedInStrategy({
     state: true,
   },
   async function(accessToken, refreshToken, profile, done) {
-    console.log('profile', profile);
-
     try {
       console.log(profile.id)  
       let user = await User.findOne({userId: profile.id});

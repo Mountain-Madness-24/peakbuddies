@@ -5,6 +5,10 @@ const ensureAuthenticated = require('../middleware/authCheck');
 
 router.use(ensureAuthenticated);
 
+/* 
+    UNTESTED
+*/
+
 
 // GET /meetings - Returns list of meetings
 router.get('/', async (req, res) => {

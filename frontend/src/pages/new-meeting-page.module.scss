@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 4rem;
+
+  .title {
+    text-align: center;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    & > div {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+  }
+}
+
+.locationDate {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}

@@ -73,7 +73,7 @@ router.post('/testsignup', async (req, res) => {
 // write a protected route that only logged in users can access
 router.get('/protected', function(req, res) {
   console.log('req.isAuthenticated()', req.isAuthenticated());
-  console.log(req.body)
+
 
   if (req.isAuthenticated()) {
     res.status(200).json({ message: "You are authenticated", user: req.user.userId });

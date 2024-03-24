@@ -8,4 +8,21 @@
     max-width: var(--width-app-max);
     padding: var(--padding-app);
   }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: var(--padding-app);
+    padding-right: var(--padding-app);
+    position: fixed;
+    bottom: 2rem;
+    width: 100%;
+    max-width: var(--width-app-max);
+    margin: auto;
+
+    & > button {
+      width: 100%;
+    }
+  }
 }
