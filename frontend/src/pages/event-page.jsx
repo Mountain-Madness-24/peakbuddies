@@ -129,11 +129,11 @@ export const EventPage = () => {
   }, [id]); // Dependency on `id` ensures this effect runs when the event ID changes
 
   return (
-    <PageLayout header={<HeaderImage />}>
-      <NavBar className={styles.navBar} />
+    <PageLayout includeNav header={<HeaderImage />}>
       <article className={styles.title}>
         <p className={globalStyles.subtitle}>Mar 23 - 24</p>
-        <h1>{eventName || "Loading event..."}</h1> {/* Use the eventName state here */}
+        <h1>{eventName || "Loading event..."}</h1>{" "}
+        {/* Use the eventName state here */}
         <span className={styles.joinedTag}>You've Joined</span>
       </article>
       <article>

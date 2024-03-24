@@ -1,0 +1,25 @@
+.formField {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    text-transform: uppercase;
+    color: var(--color-zinc-500);
+  }
+
+  input,
+  textarea {
+    background-color: var(--color-zinc-900);
+    border-radius: var(--border-radius-button);
+    height: var(--height-input);
+    border: 1px solid var(--color-zinc-800);
+    padding: 0.75rem;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}

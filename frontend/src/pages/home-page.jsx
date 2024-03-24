@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PageLayout, Button, HeaderImage, NavBar, SocketComponent } from "../components/";
-import { Link, useParams  } from "react-router-dom";
+import {
+  PageLayout,
+  Button,
+  HeaderImage,
+  NavBar,
+  SocketComponent,
+} from "../components/";
+import { Link, useParams } from "react-router-dom";
 import styles from "./home-page.module.scss";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export const HomePage = () => {
   const [events, setEvents] = useState([]); // Initialize events state
   const { id } = useParams(); // Extract the user ID from the URL parameters
+  const navigate = useNavigate();
+
+  const handleCreateEventButton = () => {
+    navigate(`/create-event`);
+  };
 
   useEffect(() => {
     // Function to fetch events
@@ -30,15 +42,17 @@ export const HomePage = () => {
 
   return (
     <PageLayout
+      includeNav
       header={<HeaderImage />}
       buttons={
         <>
           <Button variant="primary">Join Event</Button>
-          <Button variant="secondary">Create Event</Button>
+          <Button variant="secondary" onClick={handleCreateEventButton}>
+            Create Event
+          </Button>
         </>
       }
     >
-      <NavBar userId={id} className={styles.navBar} />
       <div className={styles.homePage}>
         <h1>YOUR EVENTS</h1>
         <div className={styles.eventList}>
