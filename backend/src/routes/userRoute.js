@@ -61,7 +61,31 @@ router.patch('/makeUnavailable', async (req, res) => {
   }
 });
 
+router.patch('/makeAvailable', async (req, res) => {
+  try {
+    const userId = req.user.userId;
 
+    // Update the user's availability to false
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: userId },
+      { $set: { availability: true } },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Respond with success message
+    res.status(200).json({
+      message: "User's availability updated to available",
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error("Error updating user's availability:", error);
+    res.status(500).json({ message: "Failed to update user's availability", error: error });
+  }
+});
 
 
 module.exports = router;
