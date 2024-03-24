@@ -6,7 +6,7 @@ const SOCKET_SERVER_URL = 'http://localhost:3000';
 
 export const SocketComponent = ({ userId }) => {
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         // Connect to the socket server
         const socket = io(SOCKET_SERVER_URL, {
@@ -17,18 +17,20 @@ export const SocketComponent = ({ userId }) => {
         socket.on('connect', () => {
             console.log("Socket connected:", socket.connected); // Now it should log true
         });
-
         // Listen for 'meetingNotification' event from the server
         socket.on('meetingNotification', (notification) => {
             console.log("Received meetingNotification:", notification); // Log for debugging
-
+            
             // Redirect if notification includes the expected meetingId
-            if(notification && notification.meetingId) {
+            if (notification && notification.meetingId) {
                 navigate(`/new-meeting/${notification.meetingId}`);
             } else {
                 console.error("Notification data is missing the meetingId:", notification);
             }
         });
+
+        // Emit a userLogin event with userId on connecting
+        socket.emit('userLogin', userId);
 
         // Cleanup on component unmount
         return () => {
@@ -36,7 +38,7 @@ export const SocketComponent = ({ userId }) => {
             socket.off('meetingNotification');
             socket.disconnect();
         };
-    }, [userId]);
+    }, [userId, navigate]);
 
     return null; // This component does not render anything itself
 };
