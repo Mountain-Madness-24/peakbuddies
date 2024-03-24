@@ -19,13 +19,12 @@ const userSchema = new Schema({
   pictures: [String], // Array of URLs or paths to image files
   peopleMet: [String], // Array of names or identifiers
   interestTags: [String], // Array of interest tags
-  isOrganizer: Boolean,
   bioForAdmins: String,
   contactInfoForAdmins: {
     phone: String,
     email: String
   }, // Adjust based on what info you have
-  availability: {type: Boolean, default: false},
+  availability: {type: Boolean, default: true},
   education: String,
   events: [{ type: String }], // Using custom IDs for participants
 });

@@ -184,9 +184,10 @@ router.post('/joinEvent', ensureAuthenticated, async (req, res) => {
 
 router.post('/createEvent', async (req, res) => {
   try {
+    const userId = req.user.userId; // Get the userId from the authenticated user
+
     const {
       eventJoinLink,
-      adminsOfTheEvent,
       nameOfEvent,
       description,
       importantLinks,
@@ -199,10 +200,13 @@ router.post('/createEvent', async (req, res) => {
       participants
     } = req.body;
 
-    // Create a new Event document
+    // Initialize adminsOfTheEvent with the current userId
+    const adminsOfTheEvent = [userId];
+
+    // Create a new Event document with the userId as the only admin
     const newEvent = new Event({
       eventJoinLink,
-      adminsOfTheEvent,
+      adminsOfTheEvent, // Set the current user as the only admin
       nameOfEvent,
       description,
       importantLinks,
@@ -220,13 +224,13 @@ router.post('/createEvent', async (req, res) => {
 
     // Respond to the request indicating success
     res.status(201).json({
-      message: "Hackathon event created successfully",
+      message: "Event created successfully",
       event: newEvent,
       eventId: newEvent._id // Include the generated ID in the response
     });
   } catch (error) {
-    console.error("Error creating hackathon event:", error);
-    res.status(500).json({ message: "Failed to create hackathon event", error: error });
+    console.error("Error creating event:", error);
+    res.status(500).json({ message: "Failed to create event", error: error });
   }
 });
 
