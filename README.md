@@ -12,14 +12,14 @@
 ### Frontend
 1. Change directory to `frontend/`
 2. `npm i`
-3. Create a `.env` file in the root of the frontend directory (we emailed values to pjp3@sfu.ca)
+3. Create a `.env` file in the root of the frontend directory (we emailed values to Patrick)
 4. `npm run dev`
 5. Open `localhost:5173` in a browser
 
 ### Backend
 1. Change directory to `backend/`
 2. `npm i`
-3. Create a `.env` file in the root of the backend directory (we emailed values to pjp3@sfu.ca)
+3. Create a `.env` file in the root of the backend directory (we emailed values to Patrick)
 4. `npm run start`
 
 
