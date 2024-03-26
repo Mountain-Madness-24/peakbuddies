@@ -4,6 +4,8 @@
 
 [How-to video guide for how to run the project](https://www.youtube.com/watch?v=tj4PorYr8rk)
 
+[Figma file with design mockups and presentation slides](https://www.figma.com/file/sNTuEKn0MNzwCzCWRfSvfE/Mountain-Madness-2024?type=design&node-id=114%3A2&mode=design&t=edgCm4i6Q9mrTAAp-1)
+
 ## How to run the app
 
 ### Frontend
