@@ -1,5 +1,10 @@
 # PeakBuddies
 
+
+### Presentation and demo video
+[![Presentation and demo video](https://img.youtube.com/vi/M34-pgFZEl0/maxresdefault.jpg)](https://www.youtube.com/watch?v=M34-pgFZEl0)
+
+
 [Presentation and demo video](https://www.youtube.com/watch?v=M34-pgFZEl0)
 
 [How-to video guide for how to run the project](https://www.youtube.com/watch?v=tj4PorYr8rk)
