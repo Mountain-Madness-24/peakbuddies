@@ -3,72 +3,64 @@
 
 [Presentation and demo video](https://www.youtube.com/watch?v=M34-pgFZEl0)
 
-[How-to video guide for how to run the project](https://www.youtube.com/watch?v=tj4PorYr8rk)
 
 [Figma file with design mockups and presentation slides](https://www.figma.com/file/sNTuEKn0MNzwCzCWRfSvfE/Mountain-Madness-2024?type=design&node-id=114%3A2&mode=design&t=edgCm4i6Q9mrTAAp-1)
 
-## How to run the app
 
-### Frontend
-1. Change directory to `frontend/`
-2. `npm i`
-3. Create a `.env` file in the root of the frontend directory (we emailed values to Patrick)
-4. `npm run dev`
-5. Open `localhost:5173` in a browser
+**PeakBuddies** - Transforming hackathon networking experiences for students and participants. Our project is designed to foster meaningful connections through a novel "speed networking" approach. **We are thrilled to announce that we are the First place winners of Mountain Madness 2024 🏆**.
 
-### Backend
-1. Change directory to `backend/`
-2. `npm i`
-3. Create a `.env` file in the root of the backend directory (we emailed values to Patrick)
-4. `npm run start`
+![Thumbnail](https://github.com/Mountain-Madness-24/peakbuddies/assets/64120482/a1ed00f3-57ca-401e-8c98-03035e137dbe)
 
 
 ## Overview
-PeakBuddies App is designed to revolutionize the networking experience for students and participants at hackathons. Inspired by the spontaneous nature of the BeReal app, this app aims to create meaningful connections through a novel "speed networking" approach. At predetermined times, participants receive a ping to meet another person they are matched with. The app facilitates these meetings by providing profiles, logistics, and conversation prompts, ensuring participants can make the most out of these interactions. The App uses an special API for indoor places to assure students can find the random meeting spot adding a twist to the networking where student would be exploring different parts of the university based on the organizers planning. 
+
+PeakBuddies App revolutionizes the way networking is conducted at hackathons. Inspired by the spontaneous interactions of the BeReal app, our platform aims to facilitate meaningful connections. By integrating an innovative approach where participants receive pings at predetermined times to meet others in random locations, we ensure an engaging and explorative networking experience. This method not only encourages participants to discover different parts of the venue but also adds an element of surprise to the networking process.
+
+## The Problem
+
+Networking at hackathons often lacks spontaneity and can feel intimidating or forced. Participants may find it challenging to connect with others in a meaningful way amid the hustle and bustle of the event.
+
+## Our Solution: PeakBuddies
+
+- **Speed Networking:** Just like speed dating, but for professional and creative connections. Participants exchange LinkedIn profiles, engage in timed interactions with conversation prompts, and have the opportunity to meet a wide array of individuals.
+- **Explorative Meetups:** By utilizing an API for indoor location tracking, we ensure participants can easily find their meeting spots, encouraging exploration and making the networking experience enjoyable.
+- **LinkedIn Integration:** Profiles feature LinkedIn information, relevant experience, and personal interests, making it easy to connect with and remember new acquaintances.
+
+## Tech Stack and Tools
+
+Our choice of technologies reflects our commitment to creating a responsive, user-friendly, and scalable platform:
+
+- **Frontend:** Built with React, enabling a dynamic and responsive user interface.
+- **Backend:** Node.js and Express.js serve as the backbone, providing a robust server-side solution.
+- **Database:** MongoDB, offering a flexible, document-oriented database system.
+- **APIs:**
+  - **LinkedIn API:** For importing user profiles and facilitating professional connections.
+  - **MapBox API:** Utilized for mapping indoor meeting locations, ensuring users can find their meetup spots effortlessly.
 
 ## Features
 
-### Profiles
-- Integration with LinkedIn to pull information manually for the initial version.
-- Display of name, email, LinkedIn profile link, relevant experience, and picture.
+- **Profiles:** Display of personal and professional information pulled from LinkedIn.
 
-### Organizational Tools
-- Setup of predetermined meeting rooms by event organizers.
-- Generation oflinks for participants to opt-in.
+![15](https://github.com/Mountain-Madness-24/peakbuddies/assets/64120482/a0cb524e-3a49-4653-ae97-a35513f615e6)
 
-### Networking Mechanism
-- A "speed dating" format where participants exchange LinkedIn profiles, receive conversation prompts, and have timed interactions.
-- An option to explore other participants' profiles and request connections, facilitating the expansion of one's professional network.
+- **Organizational Tools:** Allows event organizers to set up meeting rooms and schedules seamlessly.
 
-### Pages
-- Sign-up/log in
-- User profile and history
-- Hackathon event and participants pages
+![21](https://github.com/Mountain-Madness-24/peakbuddies/assets/64120482/6037dc50-bc88-4d67-981d-ac15100433e2)
 
-### Database Structure
-- **Users**: First Name, Last Name, Email, LinkedIn Link, Experience, Pictures, # People Met, Interests tags, isOrganizer, Bio, Contact info, Availability, List of people met
-- **Meeting**: Location, Lat/Long, Random action, Starting time, Icebreaker questions, Event Status, Members, isFinished, meetingId
-- **Hackathon Information**: Event Join Link, Admins, Name, Description, Important links, Meeting rooms, Start/End dates, Interval of ping, isStarted, isFinished
 
-### Backend Endpoints
-- **/user**: for login, sign-up, and user listing.
-- **/meetings**: for meeting management, participant notification, and meeting lifecycle updates.
-- **/hackathons**: for hackathon creation, updates, and location posting.
+- **Networking Mechanism:** A unique approach to meeting new people in a structured yet spontaneous manner.
 
-## User Flows
+![16](https://github.com/Mountain-Madness-24/peakbuddies/assets/64120482/106d5747-402c-4e31-8bc5-cf14cabcebbb)
 
-### Participant
-1. Join the event via QR code or link.
-2. Sign in with LinkedIn and fill in additional information.
-3. Navigate through an onboarding screen explaining app usage.
-4. Receive notifications for matches with a vague schedule.
-5. Meet with matches following the structured interaction format: introductions, discussion prompts, free time, and LinkedIn connections.
 
-### Organizer
-1. Create a new hackathon event, inputting relevant information.
-2. Generate and distribute a QR code or link for participant registration.
-3. Manage participant registrations and oversee the event's start and end.
+## Impact
 
-## Getting Started
-To use the Hackathon Networking App, organizers must first set up the event in the system, including meeting rooms and schedules. Participants can then join using the provided link, complete their profiles, and prepare for a unique networking experience designed to build meaningful professional connections.
+PeakBuddies aims to make networking at hackathons more accessible, efficient, and enjoyable. By removing the traditional barriers to networking, we provide a platform where participants can forge connections that go beyond the event, potentially lasting a lifetime.
 
+## Future Directions
+
+We envision PeakBuddies expanding its features to include more personalized matchmaking based on interests and professional goals, making every networking opportunity count.
+
+---
+
+Join us in revolutionizing hackathon networking and creating more meaningful connections. PeakBuddies - where every encounter is an opportunity for growth.
