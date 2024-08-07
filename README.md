@@ -1,5 +1,6 @@
 # PeakBuddies
 
+[Mountain Madness 2024 First Place Winners](https://new.sfucsss.org/mountain_madness/2024/index.html#winners)
 
 [Presentation and demo video](https://www.youtube.com/watch?v=M34-pgFZEl0)
 
